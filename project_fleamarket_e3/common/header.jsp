@@ -11,7 +11,7 @@ String name = "かんちゃん";
 if(user != null){
 	if(user.getAuthority()){
 		authority = "会員";
-		name = user.getName();
+		name = user.getNickname();
 	}else{
 		authority = "管理者";
 		name = user.getNickname();
@@ -19,13 +19,15 @@ if(user != null){
 }
 */
 
-/*if(user == null){
+/*
+if(user == null){
 	// セッション切れならerror.jspへフォワード
 	request.setAttribute("error","セッション切れの為、メニュー画面が表示できませんでした。");
 	request.setAttribute("cmd","logout");
 	request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 	return;
-}*/
+}
+*/
 %>
 <html>
 	<head>
@@ -144,6 +146,7 @@ if(user != null){
 
 					<div id="menu">
 						<ul id="menu_ul">
+							<li><a href="<%= request.getContextPath() %>/productList">商品一覧</a></li>
 							<li style="color:red"><a href="<%= request.getContextPath() %>/view/login.jsp">ログイン</a></li>
 							<li><a href="<%= request.getContextPath() %>/view/register.jsp">会員登録</a></li>
 						</ul>

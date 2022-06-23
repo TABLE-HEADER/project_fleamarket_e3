@@ -139,8 +139,10 @@ public class DealDAO{
 		+ deal.getTotal() + ", "
 		+ "'" + deal.getState() + "'" + ", "
 		+ "NOW()" + ", "
-		+ "NOW()" + ", "
-		+ "NOW()" + ")";
+		+ "'" + deal.getPaid_at() + "'" + ", "
+		+ "'" + deal.getSent_at() + "'" + ")";
+
+		sql = sql.replace("'null'", "NULL");
 
 		Connection con = null;
 		Statement  smt = null;
@@ -212,6 +214,8 @@ public class DealDAO{
 		+ "paid_at = '" + deal.getPaid_at() + "'" + ", "
 		+ "sent_at = '" + deal.getSent_at() + "'" + " "
 		+ "WHERE dealid = " + deal.getDealid() + "";
+
+		sql = sql.replace("'null'", "NULL");
 
 		Connection con = null;
 		Statement  smt = null;

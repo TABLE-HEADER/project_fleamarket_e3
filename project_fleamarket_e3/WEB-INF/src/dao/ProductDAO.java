@@ -143,6 +143,8 @@ public class ProductDAO{
 		+ "NULL" + ", "
 		+ "NOW()" + ")";
 
+		sql = sql.replace("'null'", "NULL");
+
 		Connection con = null;
 		Statement  smt = null;
 
@@ -214,6 +216,8 @@ public class ProductDAO{
 		+ "image = NULL" + ", "
 		+ "created_at = '" + product.getCreated_at() + "'" + " "
 		+ "WHERE productid = " + product.getProductid() + "";
+
+		sql = sql.replace("'null'", "NULL");
 
 		Connection con = null;
 		Statement  smt = null;

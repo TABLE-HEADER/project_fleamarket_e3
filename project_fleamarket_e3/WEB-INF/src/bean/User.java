@@ -7,6 +7,7 @@ public class User {
 	private String	password;
 	private String	username;
 	private String	nickname;
+	private String	birthday;
 	private String	postal_code;
 	private String	address_level1;
 	private String	address_level2;
@@ -24,6 +25,7 @@ public class User {
 		this.password	= null;
 		this.username	= null;
 		this.nickname	= null;
+		this.birthday	= null;
 		this.postal_code	= null;
 		this.address_level1	= null;
 		this.address_level2	= null;
@@ -37,11 +39,12 @@ public class User {
 	}
 
 	// 引数有りコンストラクタ
-	public User(int userid, String password, String username, String nickname, String postal_code, String address_level1, String address_level2, String address_line1, String address_line2, String email, String credit_number, int deal_count, boolean authority, String created_at) {
+	public User(int userid, String password, String username, String nickname, String birthday, String postal_code, String address_level1, String address_level2, String address_line1, String address_line2, String email, String credit_number, int deal_count, boolean authority, String created_at) {
 		this.userid	= userid;
 		this.password	= password;
 		this.username	= username;
 		this.nickname	= nickname;
+		this.birthday	= birthday;
 		this.postal_code	= postal_code;
 		this.address_level1	= address_level1;
 		this.address_level2	= address_level2;
@@ -66,6 +69,9 @@ public class User {
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
 	}
 	public void setPostal_code(String postal_code) {
 		this.postal_code = postal_code;
@@ -110,6 +116,9 @@ public class User {
 	}
 	public String getNickname() {
 		return this.nickname;
+	}
+	public String getBirthday() {
+		return this.birthday;
 	}
 	public String getPostal_code() {
 		return this.postal_code;

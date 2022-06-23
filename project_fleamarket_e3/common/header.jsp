@@ -22,7 +22,7 @@ if(user != null){
 /*
 if(user == null){
 	// セッション切れならerror.jspへフォワード
-	request.setAttribute("error","セッション切れの為、メニュー画面が表示できませんでした。");
+	request.setAttribute("error","セッション切れの為、画面が表示できませんでした。");
 	request.setAttribute("cmd","logout");
 	request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 	return;
@@ -49,6 +49,9 @@ if(user == null){
 			}
 			form{
 				margin-block-end:0em;
+			}
+			.kome{
+				font-size:small;
 			}
 			#menu{
 				float:right;

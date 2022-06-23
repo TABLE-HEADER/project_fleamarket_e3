@@ -56,7 +56,7 @@ public class ProductDAO{
 				product.setOn_sale(rs.getBoolean("on_sale"));
 				product.setRemark(rs.getString("remark"));
 				product.setImage(null);
-				product.setCreated_at(rs.getString("created_at"));
+				product.setCreated_at(rs.getString("created_at").split(" ")[0]);
 
 			}
 
@@ -74,8 +74,8 @@ public class ProductDAO{
 		return product;
 	}
 
-	// selectAll
-	public ArrayList<Product> selectAll(){
+	// selectBySellerid
+	public ArrayList<Product> selectBySellerid(int sellerid) {
 
 		//変数宣言
 		Connection con = null;
@@ -85,7 +85,9 @@ public class ProductDAO{
 
 		//SQL文
 		String sql = "SELECT * FROM productinfo p "
-		+ "INNER JOIN userinfo u ON p.sellerid = u.userid";
+				+ "INNER JOIN userinfo u ON p.sellerid = u.userid "
+				+ "WHERE sellerid = " + sellerid + " "
+				+ "ORDER BY p.created_at DESC, productid DESC";
 
 		try{
 			con = getConnection();
@@ -108,7 +110,61 @@ public class ProductDAO{
 				product.setOn_sale(rs.getBoolean("on_sale"));
 				product.setRemark(rs.getString("remark"));
 				product.setImage(null);
-				product.setCreated_at(rs.getString("created_at"));
+				product.setCreated_at(rs.getString("created_at").split(" ")[0].split(" ")[0]);
+
+				list.add(product);
+
+			}
+
+		}catch(Exception e){
+			throw new IllegalStateException(e);
+		}finally{
+			//リソースの開放
+			if(smt != null){
+				try{smt.close();}catch(SQLException ignore){}
+			}
+			if(con != null){
+				try{con.close();}catch(SQLException ignore){}
+			}
+		}
+		return list;
+	}
+
+	// selectAll
+	public ArrayList<Product> selectAll(){
+
+		//変数宣言
+		Connection con = null;
+		Statement  smt = null;
+		Product product;
+		ArrayList<Product> list = new ArrayList<Product>();
+
+		//SQL文
+		String sql = "SELECT * FROM productinfo p "
+		+ "INNER JOIN userinfo u ON p.sellerid = u.userid ORDER BY p.created_at DESC, productid DESC";
+
+		try{
+			con = getConnection();
+			smt = con.createStatement();
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			//取得した結果をProductオブジェクトに格納
+			while(rs.next()){
+				product = new Product();
+				product.setProductid(rs.getInt("productid"));
+				product.setSellerid(rs.getInt("sellerid"));
+				product.setNickname(rs.getString("nickname"));
+				product.setAddress_level1(rs.getString("address_level1"));
+				product.setDeal_count(rs.getInt("deal_count"));
+				product.setProductname(rs.getString("productname"));
+				product.setCategory(rs.getString("category"));
+				product.setStock(rs.getInt("stock"));
+				product.setPrice(rs.getInt("price"));
+				product.setOn_sale(rs.getBoolean("on_sale"));
+				product.setRemark(rs.getString("remark"));
+				product.setImage(null);
+				product.setCreated_at(rs.getString("created_at").split(" ")[0]);
 
 				list.add(product);
 			}
@@ -142,6 +198,8 @@ public class ProductDAO{
 		+ "'" + product.getRemark() + "'" + ", "
 		+ "NULL" + ", "
 		+ "NOW()" + ")";
+
+		sql = sql.replace("'null'", "NULL");
 
 		Connection con = null;
 		Statement  smt = null;
@@ -215,6 +273,8 @@ public class ProductDAO{
 		+ "created_at = '" + product.getCreated_at() + "'" + " "
 		+ "WHERE productid = " + product.getProductid() + "";
 
+		sql = sql.replace("'null'", "NULL");
+
 		Connection con = null;
 		Statement  smt = null;
 
@@ -252,7 +312,8 @@ public class ProductDAO{
 		//SQL文
 		String sql = "SELECT * FROM productinfo p "
 				+ "INNER JOIN userinfo u ON p.sellerid = u.userid "
-				+ "WHERE productname LIKE '%" + productname + "%'";
+				+ "WHERE productname LIKE '%" + productname + "%' "
+				+ "ORDER BY p.created_at DESC, productid DESC";
 
 		try{
 			con = getConnection();
@@ -275,7 +336,120 @@ public class ProductDAO{
 				product.setOn_sale(rs.getBoolean("on_sale"));
 				product.setRemark(rs.getString("remark"));
 				product.setImage(null);
-				product.setCreated_at(rs.getString("created_at"));
+				product.setCreated_at(rs.getString("created_at").split(" ")[0]);
+
+				list.add(product);
+			}
+
+		}catch(Exception e){
+			throw new IllegalStateException(e);
+		}finally{
+			//リソースの開放
+			if(smt != null){
+				try{smt.close();}catch(SQLException ignore){}
+			}
+			if(con != null){
+				try{con.close();}catch(SQLException ignore){}
+			}
+		}
+		return list;
+	}
+
+	// search
+	public ArrayList<Product> searchNameAndCategory(String productname, String category){
+
+		//変数宣言
+		Connection con = null;
+		Statement  smt = null;
+		Product product;
+		ArrayList<Product> list = new ArrayList<Product>();
+
+		//SQL文
+		String sql = "SELECT * FROM productinfo p "
+				+ "INNER JOIN userinfo u ON p.sellerid = u.userid "
+				+ "WHERE productname LIKE '%" + productname + "%' "
+				+ "AND category LIKE '%" + category + "%' "
+				+ "ORDER BY p.created_at DESC, productid DESC";
+
+		try{
+			con = getConnection();
+			smt = con.createStatement();
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			//取得した結果をProductオブジェクトに格納
+			while(rs.next()){
+				product = new Product();
+				product.setProductid(rs.getInt("productid"));
+				product.setSellerid(rs.getInt("sellerid"));
+				product.setNickname(rs.getString("nickname"));
+				product.setAddress_level1(rs.getString("address_level1"));
+				product.setDeal_count(rs.getInt("deal_count"));
+				product.setProductname(rs.getString("productname"));
+				product.setCategory(rs.getString("category"));
+				product.setStock(rs.getInt("stock"));
+				product.setPrice(rs.getInt("price"));
+				product.setOn_sale(rs.getBoolean("on_sale"));
+				product.setRemark(rs.getString("remark"));
+				product.setImage(null);
+				product.setCreated_at(rs.getString("created_at").split(" ")[0]);
+
+				list.add(product);
+			}
+
+		}catch(Exception e){
+			throw new IllegalStateException(e);
+		}finally{
+			//リソースの開放
+			if(smt != null){
+				try{smt.close();}catch(SQLException ignore){}
+			}
+			if(con != null){
+				try{con.close();}catch(SQLException ignore){}
+			}
+		}
+		return list;
+	}
+
+	// searchNCS
+	public ArrayList<Product> searchNCS(String productname, String category, int sellerid){
+
+		//変数宣言
+		Connection con = null;
+		Statement  smt = null;
+		Product product;
+		ArrayList<Product> list = new ArrayList<Product>();
+
+		//SQL文
+		String sql = "SELECT * FROM productinfo p "
+				+ "INNER JOIN userinfo u ON p.sellerid = u.userid "
+				+ "WHERE productname LIKE '%" + productname + "%' "
+				+ "AND category LIKE '%" + category + "%' "
+				+ "AND sellerid = " + sellerid + " "
+				+ "ORDER BY p.created_at DESC, productid DESC";
+
+		try{
+			con = getConnection();
+			smt = con.createStatement();
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			//取得した結果をProductオブジェクトに格納
+			while(rs.next()){
+				product = new Product();
+				product.setProductid(rs.getInt("productid"));
+				product.setSellerid(rs.getInt("sellerid"));
+				product.setNickname(rs.getString("nickname"));
+				product.setAddress_level1(rs.getString("address_level1"));
+				product.setDeal_count(rs.getInt("deal_count"));
+				product.setProductname(rs.getString("productname"));
+				product.setCategory(rs.getString("category"));
+				product.setStock(rs.getInt("stock"));
+				product.setPrice(rs.getInt("price"));
+				product.setOn_sale(rs.getBoolean("on_sale"));
+				product.setRemark(rs.getString("remark"));
+				product.setImage(null);
+				product.setCreated_at(rs.getString("created_at").split(" ")[0]);
 
 				list.add(product);
 			}

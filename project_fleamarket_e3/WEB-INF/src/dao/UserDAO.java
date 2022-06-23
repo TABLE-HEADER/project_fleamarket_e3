@@ -46,6 +46,7 @@ public class UserDAO{
 				user.setPassword(rs.getString("password"));
 				user.setUsername(rs.getString("username"));
 				user.setNickname(rs.getString("nickname"));
+				user.setBirthday(rs.getString("birthday"));
 				user.setPostal_code(rs.getString("postal_code"));
 				user.setAddress_level1(rs.getString("address_level1"));
 				user.setAddress_level2(rs.getString("address_level2"));
@@ -55,8 +56,111 @@ public class UserDAO{
 				user.setCredit_number(rs.getString("credit_number"));
 				user.setDeal_count(rs.getInt("deal_count"));
 				user.setAuthority(rs.getBoolean("authority"));
-				System.out.println(rs.getString("created_at"));
+				user.setCreated_at(rs.getString("created_at").split(" ")[0]);
+
+			}
+
+		}catch(Exception e){
+			throw new IllegalStateException(e);
+		}finally{
+			//リソースの開放
+			if(smt != null){
+				try{smt.close();}catch(SQLException ignore){}
+			}
+			if(con != null){
+				try{con.close();}catch(SQLException ignore){}
+			}
+		}
+		return user;
+	}
+
+
+	// DBのuserinfoテーブルから指定のemailを持つUserを返す
+	public User selectByEmail(String email) {
+
+		//変数宣言
+		Connection con = null;
+		Statement  smt = null;
+		User user = new User();
+
+		//SQL文
+		String sql = "SELECT * FROM userinfo WHERE email = '" + email + "'";
+
+		try{
+			con = getConnection();
+			smt = con.createStatement();
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			//取得した結果をUserオブジェクトに格納
+			if(rs.next()){
+				user.setUserid(rs.getInt("userid"));
+				user.setPassword(rs.getString("password"));
+				user.setUsername(rs.getString("username"));
+				user.setNickname(rs.getString("nickname"));
+				user.setBirthday(rs.getString("birthday"));
+				user.setPostal_code(rs.getString("postal_code"));
+				user.setAddress_level1(rs.getString("address_level1"));
+				user.setAddress_level2(rs.getString("address_level2"));
+				user.setAddress_line1(rs.getString("address_line1"));
+				user.setAddress_line2(rs.getString("address_line2"));
+				user.setEmail(rs.getString("email"));
+				user.setCredit_number(rs.getString("credit_number"));
+				user.setDeal_count(rs.getInt("deal_count"));
+				user.setAuthority(rs.getBoolean("authority"));
 				user.setCreated_at(rs.getString("created_at"));
+
+			}
+
+		}catch(Exception e){
+			throw new IllegalStateException(e);
+		}finally{
+			//リソースの開放
+			if(smt != null){
+				try{smt.close();}catch(SQLException ignore){}
+			}
+			if(con != null){
+				try{con.close();}catch(SQLException ignore){}
+			}
+		}
+		return user;
+	}
+
+
+	// DBのuserinfoテーブルから指定ユーザーとパスワードの条件に合致する情報を取得するメソッド定義
+	public User selectByUser(String email , String password) {
+
+		//変数宣言
+		Connection con = null;
+		Statement  smt = null;
+		User user = new User();
+
+		//SQL文
+		String sql = "SELECT * FROM userinfo WHERE email = '" + email + "' AND password = '" + password + "'";
+
+		try{
+			con = getConnection();
+			smt = con.createStatement();
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			//取得した結果をUserオブジェクトに格納
+			if(rs.next()){
+				user.setUserid(rs.getInt("userid"));
+				user.setPassword(rs.getString("password"));
+				user.setUsername(rs.getString("username"));
+				user.setNickname(rs.getString("nickname"));
+				user.setBirthday(rs.getString("birthday"));
+				user.setPostal_code(rs.getString("postal_code"));
+				user.setAddress_level1(rs.getString("address_level1"));
+				user.setAddress_level2(rs.getString("address_level2"));
+				user.setAddress_line1(rs.getString("address_line1"));
+				user.setAddress_line2(rs.getString("address_line2"));
+				user.setEmail(rs.getString("email"));
+				user.setCredit_number(rs.getString("credit_number"));
+				user.setDeal_count(rs.getInt("deal_count"));
+				user.setAuthority(rs.getBoolean("authority"));
+				user.setCreated_at(rs.getString("created_at").split(" ")[0]);
 
 			}
 
@@ -84,7 +188,7 @@ public class UserDAO{
 		ArrayList<User> list = new ArrayList<User>();
 
 		//SQL文
-		String sql = "SELECT * FROM userinfo";
+		String sql = "SELECT * FROM userinfo ORDER BY created_at DESC, userid DESC";
 
 		try{
 			con = getConnection();
@@ -99,6 +203,7 @@ public class UserDAO{
 				user.setPassword(rs.getString("password"));
 				user.setUsername(rs.getString("username"));
 				user.setNickname(rs.getString("nickname"));
+				user.setBirthday(rs.getString("birthday"));
 				user.setPostal_code(rs.getString("postal_code"));
 				user.setAddress_level1(rs.getString("address_level1"));
 				user.setAddress_level2(rs.getString("address_level2"));
@@ -108,7 +213,7 @@ public class UserDAO{
 				user.setCredit_number(rs.getString("credit_number"));
 				user.setDeal_count(rs.getInt("deal_count"));
 				user.setAuthority(rs.getBoolean("authority"));
-				user.setCreated_at(rs.getString("created_at"));
+				user.setCreated_at(rs.getString("created_at").split(" ")[0]);
 
 				list.add(user);
 			}
@@ -136,6 +241,7 @@ public class UserDAO{
 		+ "'" + user.getPassword() + "'" + ", "
 		+ "'" + user.getUsername() + "'" + ", "
 		+ "'" + user.getNickname() + "'" + ", "
+		+ "'" + user.getBirthday() + "'" + ", "
 		+ "'" + user.getPostal_code() + "'" + ", "
 		+ "'" + user.getAddress_level1() + "'" + ", "
 		+ "'" + user.getAddress_level2() + "'" + ", "
@@ -146,6 +252,8 @@ public class UserDAO{
 		+ user.getDeal_count() + ", "
 		+ user.getAuthority() + ", "
 		+ "NOW()" + ")";
+
+		sql = sql.replace("'null'", "NULL");
 
 		Connection con = null;
 		Statement  smt = null;
@@ -211,6 +319,7 @@ public class UserDAO{
 		+ "password = '" + user.getPassword() + "'" + ", "
 		+ "username = '" + user.getUsername() + "'" + ", "
 		+ "nickname = '" + user.getNickname() + "'" + ", "
+		+ "birthday = '" + user.getBirthday() + "'" + ", "
 		+ "postal_code = '" + user.getPostal_code() + "'" + ", "
 		+ "address_level1 = '" + user.getAddress_level1() + "'" + ", "
 		+ "address_level2 = '" + user.getAddress_level2() + "'" + ", "
@@ -222,6 +331,8 @@ public class UserDAO{
 		+ "authority = " + user.getAuthority() + ", "
 		+ "created_at = '" + user.getCreated_at() + "'" + " "
 		+ "WHERE userid = " + user.getUserid() + "";
+
+		sql = sql.replace("'null'", "NULL");
 
 		Connection con = null;
 		Statement  smt = null;
@@ -258,7 +369,7 @@ public class UserDAO{
 		ArrayList<User> list = new ArrayList<User>();
 
 		//SQL文
-		String sql = "SELECT * FROM userinfo WHERE nickname LIKE '%" + nickname + "%'";
+		String sql = "SELECT * FROM userinfo WHERE nickname LIKE '%" + nickname + "%' ORDER BY created_at DESC, userid DESC";
 
 		try{
 			con = getConnection();
@@ -273,6 +384,7 @@ public class UserDAO{
 				user.setPassword(rs.getString("password"));
 				user.setUsername(rs.getString("username"));
 				user.setNickname(rs.getString("nickname"));
+				user.setBirthday(rs.getString("birthday"));
 				user.setPostal_code(rs.getString("postal_code"));
 				user.setAddress_level1(rs.getString("address_level1"));
 				user.setAddress_level2(rs.getString("address_level2"));
@@ -282,7 +394,7 @@ public class UserDAO{
 				user.setCredit_number(rs.getString("credit_number"));
 				user.setDeal_count(rs.getInt("deal_count"));
 				user.setAuthority(rs.getBoolean("authority"));
-				user.setCreated_at(rs.getString("created_at"));
+				user.setCreated_at(rs.getString("created_at").split(" ")[0]);
 
 				list.add(user);
 			}

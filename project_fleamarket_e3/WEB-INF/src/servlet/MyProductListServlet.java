@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -15,15 +17,37 @@ public class MyProductListServlet extends HttpServlet{
 
 	public void doGet(HttpServletRequest request ,HttpServletResponse response) throws ServletException ,IOException{
 
+		String productname = "";
+		String category = "";
+
+		request.setCharacterEncoding("UTF-8");
+
+		if(request.getParameter("productname") != null){
+			productname = (String)request.getParameter("productname");
+			request.setAttribute("productname", productname);
+		}
+
+		if(request.getParameter("category") != null){
+			category = (String)request.getParameter("category");
+			request.setAttribute("category", category);
+		}
+
+		commonProcess(request, response, productname, category);
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+	throws ServletException, IOException {
+
+		// 登録後はポスト送信で訪れる
+		commonProcess(request, response, "", "");
+	}
+
+	private void commonProcess(HttpServletRequest request, HttpServletResponse response, String productname, String category) throws ServletException, IOException {
+
 		String error = "";
 		String cmd = "";
 
 		try {
-
-			// 変数宣言
-			String productname = "";
-			String category = "";
-			request.setCharacterEncoding("UTF-8");
 
 			// change_on_sale
 			if(request.getParameter("changeid") != null){
@@ -33,24 +57,15 @@ public class MyProductListServlet extends HttpServlet{
 				objProductDao.update(product);
 			}
 
-
-			if(request.getParameter("productname") != null){
-				productname = (String)request.getParameter("productname");
-			}
-
-			if(request.getParameter("category") != null){
-				category = (String)request.getParameter("category");
-			}
-
 			//セッションオブジェクトの取得
 			HttpSession session = request.getSession();
 
 			// セッション情報からユーザーの取得
-			// User user = (User)session.getAttribute("user");
+			User user = (User)session.getAttribute("user");
 
-			// テスト用。後で必ず消すこと！！！
-			UserDAO objUserDao = new UserDAO();
-			User user = objUserDao.selectByUserid(24);
+//			// テスト用。後で必ず消すこと！！！
+//			UserDAO objUserDao = new UserDAO();
+//			User user = objUserDao.selectByUserid(24);
 
 			if(user == null) {
 				// セッション切れならerror.jspへフォワード

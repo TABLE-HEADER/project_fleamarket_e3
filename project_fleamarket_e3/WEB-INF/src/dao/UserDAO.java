@@ -56,7 +56,8 @@ public class UserDAO{
 				user.setCredit_number(rs.getString("credit_number"));
 				user.setDeal_count(rs.getInt("deal_count"));
 				user.setAuthority(rs.getBoolean("authority"));
-				user.setCreated_at(rs.getString("created_at").split(" ")[0]);
+				String created_at = rs.getString("created_at");
+				user.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
 
 			}
 
@@ -108,7 +109,8 @@ public class UserDAO{
 				user.setCredit_number(rs.getString("credit_number"));
 				user.setDeal_count(rs.getInt("deal_count"));
 				user.setAuthority(rs.getBoolean("authority"));
-				user.setCreated_at(rs.getString("created_at"));
+				String created_at = rs.getString("created_at");
+				user.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
 
 			}
 
@@ -160,7 +162,8 @@ public class UserDAO{
 				user.setCredit_number(rs.getString("credit_number"));
 				user.setDeal_count(rs.getInt("deal_count"));
 				user.setAuthority(rs.getBoolean("authority"));
-				user.setCreated_at(rs.getString("created_at").split(" ")[0]);
+				String created_at = rs.getString("created_at");
+				user.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
 
 			}
 
@@ -213,7 +216,8 @@ public class UserDAO{
 				user.setCredit_number(rs.getString("credit_number"));
 				user.setDeal_count(rs.getInt("deal_count"));
 				user.setAuthority(rs.getBoolean("authority"));
-				user.setCreated_at(rs.getString("created_at").split(" ")[0]);
+				String created_at = rs.getString("created_at");
+				user.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
 
 				list.add(user);
 			}
@@ -394,7 +398,8 @@ public class UserDAO{
 				user.setCredit_number(rs.getString("credit_number"));
 				user.setDeal_count(rs.getInt("deal_count"));
 				user.setAuthority(rs.getBoolean("authority"));
-				user.setCreated_at(rs.getString("created_at").split(" ")[0]);
+				String created_at = rs.getString("created_at");
+				user.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
 
 				list.add(user);
 			}

@@ -14,7 +14,7 @@ public class Product {
 	private int	price;
 	private boolean	on_sale;
 	private String	remark;
-	private String	image;
+	private byte[]	image;
 	private String	created_at;
 
 	// 引数無しコンストラクタ
@@ -35,7 +35,7 @@ public class Product {
 	}
 
 	// 引数有りコンストラクタ
-	public Product(int productid, int sellerid, String nickname, String address_level1, int deal_count, String productname, String category, int stock, int price, boolean on_sale, String remark, String image, String created_at) {
+	public Product(int productid, int sellerid, String nickname, String address_level1, int deal_count, String productname, String category, int stock, int price, boolean on_sale, String remark, byte[] image, String created_at) {
 		this.productid	= productid;
 		this.sellerid	= sellerid;
 		this.nickname	= nickname;
@@ -85,7 +85,7 @@ public class Product {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public void setImage(String image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 	public void setCreated_at(String created_at) {
@@ -126,7 +126,7 @@ public class Product {
 	public String getRemark() {
 		return this.remark;
 	}
-	public String getImage() {
+	public byte[] getImage() {
 		return this.image;
 	}
 	public String getCreated_at() {

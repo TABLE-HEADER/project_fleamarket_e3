@@ -9,12 +9,12 @@ ArrayList<Product> product_list =(ArrayList<Product>)request.getAttribute("produ
 String productname = "";
 String category = "";
 
-if(request.getParameter("productname") != null){
-	productname = (String)request.getParameter("productname");
+if(request.getAttribute("productname") != null){
+	productname = (String)request.getAttribute("productname");
 }
 
-if(request.getParameter("category") != null){
-	category = (String)request.getParameter("category");
+if(request.getAttribute("category") != null){
+	category = (String)request.getAttribute("category");
 }
 %>
 
@@ -78,13 +78,13 @@ if(request.getParameter("category") != null){
 			<table align="center">
 				<caption>
 					<%if(productname.equals("") && category.equals("")) {%>
-						全件表示（<%=product_list.size() %>件）
+						全件表示（<%=product_list != null ? product_list.size() : 0%>件）
 					<%}
 					else{%>
 						<%=!category.equals("") ? "カテゴリ：" + category : "" %>
 						<%=!productname.equals("") && !category.equals("") ? "、" : "" %>
 						<%=!productname.equals("") ? "商品名：" + productname : ""  %>
-						の検索結果（<%=product_list.size() %>件）
+						の検索結果（<%=product_list != null ? product_list.size() : 0%>件）
 					<% }%>
 				</caption>
 				<tr>

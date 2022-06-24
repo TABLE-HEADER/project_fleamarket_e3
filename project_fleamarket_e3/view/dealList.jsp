@@ -78,13 +78,13 @@ if(request.getParameter("category") != null){
 			<table align="center">
 				<caption>
 					<%if(productname.equals("") && category.equals("")) {%>
-						全件表示（<%=deal_list.size() %>件）
+						全件表示（<%=deal_list != null ? deal_list.size() : 0%>件）
 					<%}
 					else{%>
 						<%=!category.equals("") ? "カテゴリ：" + category : "" %>
 						<%=!productname.equals("") && !category.equals("") ? "、" : "" %>
 						<%=!productname.equals("") ? "商品名：" + productname : ""  %>
-						の検索結果（<%=deal_list.size() %>件）
+						の検索結果（<%=deal_list != null ? deal_list.size() : 0%>件）
 					<% }%>
 				</caption>
 				<tr>

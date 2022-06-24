@@ -1,6 +1,7 @@
 package servlet;
+
 /*
- * 機能名：出品登録機能
+ * 機能名：出品更新機能
  * 作成者：中西りりな
  * 作成日：2022/06/23
  */
@@ -15,7 +16,7 @@ import bean.Product;
 import bean.User;
 import dao.ProductDAO;
 
-public class MyProductInsertServlet extends HttpServlet {
+public class MyProductUpdateServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -35,10 +36,8 @@ public class MyProductInsertServlet extends HttpServlet {
 			// ProductDAOオブジェクト生成
 			ProductDAO objDao = new ProductDAO();
 
-			// 登録する商品を格納するProductオブジェクト生成
-			Product product = new Product();
-
 			// パラメータの取得
+			String strProductid=request.getParameter("productid");
 			String category = request.getParameter("category");
 			String productname = request.getParameter("productname");
 			String strStock = request.getParameter("stock");
@@ -87,11 +86,10 @@ public class MyProductInsertServlet extends HttpServlet {
 				return;
 			}
 
-			// 入力情報をProductオブジェクトに格納
-			product.setSellerid(user.getUserid());
-			// ここは消す
-			//product.setSellerid(24);
+			// 登録する商品を格納するProductオブジェクト生成
+			Product product = objDao.selectByProductid(Integer.parseInt(strProductid));
 
+			// 入力情報をProductオブジェクトに格納
 			product.setCategory(category);
 			product.setProductname(productname);
 			product.setStock(stock);
@@ -111,27 +109,27 @@ public class MyProductInsertServlet extends HttpServlet {
 			}
 			product.setImage(bytes);
 
-			// insert()メソッドの呼び出し
-			objDao.insert(product);
+			// update()メソッドの呼び出し
+			objDao.update(product);
 
 		} catch (IllegalStateException e) {
-			errorMessage = "DB接続エラーの為、出品登録は行えませんでした。";
+			errorMessage = "DB接続エラーの為、出品内容更新は行えませんでした。";
 			cmd = "logout";
 		} finally {
 
-			//未入力がある場合はmyProductInsert.jspにフォワード
+			// 未入力がある場合はmyProductUpdate.jspにフォワード
 			if (error.size() != 0) {
 				request.setAttribute("error", error);
-				request.getRequestDispatcher("/view/myProductInsert.jsp").forward(request, response);
+				request.getRequestDispatcher("/view/myProductUpdate.jsp").forward(request, response);
 			}
-			//エラーがある場合はerror.jspにフォワード
+			// エラーがある場合はerror.jspにフォワード
 			if (!errorMessage.equals("")) {
 				request.setAttribute("error", errorMessage);
 				request.setAttribute("cmd", cmd);
 				request.getRequestDispatcher("view/error.jsp").forward(request, response);
 			}
 
-			//エラーがない場合はmyProductListServletにフォワード
+			// エラーがない場合はmyProductListServletにフォワード
 			request.getRequestDispatcher("/myProductList").forward(request, response);
 		}
 	}

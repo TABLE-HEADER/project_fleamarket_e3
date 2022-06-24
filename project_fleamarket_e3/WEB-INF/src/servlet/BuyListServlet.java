@@ -1,14 +1,20 @@
 package servlet;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import bean.Deal;
 import bean.Product;
+import bean.User;
+import dao.DealDAO;
 import dao.ProductDAO;
+import dao.UserDAO;
 
-public class ProductListServlet extends HttpServlet{
+public class BuyListServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	public void doGet(HttpServletRequest request ,HttpServletResponse response) throws ServletException ,IOException{
@@ -18,15 +24,20 @@ public class ProductListServlet extends HttpServlet{
 
 		try {
 
-			// DAOオブジェクト宣言
-			ProductDAO objProductDao = new ProductDAO();
-			ArrayList<Product> list;
-
+			// 変数宣言
 			String productname = "";
 			String category = "";
 			request.setCharacterEncoding("UTF-8");
 
-			// search
+			// change_state
+			if(request.getParameter("changeid") != null){
+				DealDAO objDealDao = new DealDAO();
+				Deal deal = objDealDao .selectByDealid(Integer.parseInt(request.getParameter("changeid")));
+				deal.setState("発送待ち");
+				deal.setPaid_at(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
+				objDealDao.update(deal);
+			}
+
 			if(request.getParameter("productname") != null){
 				productname = (String)request.getParameter("productname");
 			}
@@ -35,21 +46,35 @@ public class ProductListServlet extends HttpServlet{
 				category = (String)request.getParameter("category");
 			}
 
+			//セッションオブジェクトの取得
+			HttpSession session = request.getSession();
+
+//			// セッション情報からユーザーの取得
+//			User user = (User)session.getAttribute("user");
+
+			// テスト用。後で必ず消すこと！！！
+			UserDAO objUserDao = new UserDAO();
+			User user = objUserDao.selectByUserid(12);
+
+			// DAOオブジェクト宣言
+			DealDAO objDealDao = new DealDAO();
+			ArrayList<Deal> list;
+
 			if(productname.equals("") && category.equals("")) {
 
 				// selectAllの実行
-				list = objProductDao.selectOn_sale();
+				list = objDealDao.selectByBuyerid(user.getUserid());
 
 			}
 			else {
 
-				// searchNameAndCategoryの実行
-				list = objProductDao.searchNCOn_sale(productname, category);
+				// searchNCBの実行
+				list = objDealDao.searchNCB(productname, category, user.getUserid());
 
 			}
 
 			// ArrayListをリクエストスコープへ格納
-			request.setAttribute("product_list", list);
+			request.setAttribute("deal_list", list);
 
 		}catch (IllegalStateException e) {
 			error = "DB接続エラーの為、一覧表示は行えませんでした。";
@@ -66,7 +91,7 @@ public class ProductListServlet extends HttpServlet{
  				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 			else {
-				request.getRequestDispatcher("/view/productList.jsp").forward(request, response);
+				request.getRequestDispatcher("/view/buyList.jsp").forward(request, response);
 			}
 		}
 

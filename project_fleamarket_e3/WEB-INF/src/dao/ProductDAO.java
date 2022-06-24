@@ -3,6 +3,7 @@ import java.sql.*;
 import java.util.*;
 
 import bean.Product;
+import util.ImageConvert;
 
 public class ProductDAO{
 
@@ -55,8 +56,9 @@ public class ProductDAO{
 				product.setPrice(rs.getInt("price"));
 				product.setOn_sale(rs.getBoolean("on_sale"));
 				product.setRemark(rs.getString("remark"));
-				product.setImage(null);
-				product.setCreated_at(rs.getString("created_at").split(" ")[0]);
+				product.setImage(ImageConvert.getByteFromResult(rs, "image"));
+				String created_at = rs.getString("p.created_at");
+				product.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
 
 			}
 
@@ -109,8 +111,66 @@ public class ProductDAO{
 				product.setPrice(rs.getInt("price"));
 				product.setOn_sale(rs.getBoolean("on_sale"));
 				product.setRemark(rs.getString("remark"));
-				product.setImage(null);
-				product.setCreated_at(rs.getString("created_at").split(" ")[0].split(" ")[0]);
+				product.setImage(ImageConvert.getByteFromResult(rs, "image"));
+				String created_at = rs.getString("p.created_at");
+				product.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
+
+				list.add(product);
+
+			}
+
+		}catch(Exception e){
+			throw new IllegalStateException(e);
+		}finally{
+			//リソースの開放
+			if(smt != null){
+				try{smt.close();}catch(SQLException ignore){}
+			}
+			if(con != null){
+				try{con.close();}catch(SQLException ignore){}
+			}
+		}
+		return list;
+	}
+
+	// on_sale==trueのもののみ選択
+	public ArrayList<Product> selectOn_sale() {
+
+		//変数宣言
+		Connection con = null;
+		Statement  smt = null;
+		Product product;
+		ArrayList<Product> list = new ArrayList<Product>();
+
+		//SQL文
+		String sql = "SELECT * FROM productinfo p "
+				+ "INNER JOIN userinfo u ON p.sellerid = u.userid "
+				+ "WHERE on_sale = TRUE "
+				+ "ORDER BY p.created_at DESC, productid DESC";
+
+		try{
+			con = getConnection();
+			smt = con.createStatement();
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			//取得した結果をProductオブジェクトに格納
+			while(rs.next()){
+				product = new Product();
+				product.setProductid(rs.getInt("productid"));
+				product.setSellerid(rs.getInt("sellerid"));
+				product.setNickname(rs.getString("nickname"));
+				product.setAddress_level1(rs.getString("address_level1"));
+				product.setDeal_count(rs.getInt("deal_count"));
+				product.setProductname(rs.getString("productname"));
+				product.setCategory(rs.getString("category"));
+				product.setStock(rs.getInt("stock"));
+				product.setPrice(rs.getInt("price"));
+				product.setOn_sale(rs.getBoolean("on_sale"));
+				product.setRemark(rs.getString("remark"));
+				product.setImage(ImageConvert.getByteFromResult(rs, "image"));
+				String created_at = rs.getString("p.created_at");
+				product.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
 
 				list.add(product);
 
@@ -163,8 +223,9 @@ public class ProductDAO{
 				product.setPrice(rs.getInt("price"));
 				product.setOn_sale(rs.getBoolean("on_sale"));
 				product.setRemark(rs.getString("remark"));
-				product.setImage(null);
-				product.setCreated_at(rs.getString("created_at").split(" ")[0]);
+				product.setImage(ImageConvert.getByteFromResult(rs, "image"));
+				String created_at = rs.getString("p.created_at");
+				product.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
 
 				list.add(product);
 			}
@@ -196,20 +257,21 @@ public class ProductDAO{
 		+ product.getPrice() + ", "
 		+ product.getOn_sale() + ", "
 		+ "'" + product.getRemark() + "'" + ", "
-		+ "NULL" + ", "
+		+ "?" + ", "
 		+ "NOW()" + ")";
 
 		sql = sql.replace("'null'", "NULL");
 
 		Connection con = null;
-		Statement  smt = null;
+		PreparedStatement  smt = null;
 
 		try{
 
-			con = ProductDAO.getConnection();
-			smt = con.createStatement();
+			con = UserDAO.getConnection();
+			smt = con.prepareStatement(sql);
+			smt.setBytes(1, product.getImage());
 
-			smt.executeUpdate(sql);
+			smt.executeUpdate();
 
 		}
 		catch(Exception e){
@@ -269,21 +331,22 @@ public class ProductDAO{
 		+ "price = " + product.getPrice() + ", "
 		+ "on_sale = " + product.getOn_sale() + ", "
 		+ "remark = '" + product.getRemark() + "'" + ", "
-		+ "image = NULL" + ", "
+		+ "image = ?" + ", "
 		+ "created_at = '" + product.getCreated_at() + "'" + " "
 		+ "WHERE productid = " + product.getProductid() + "";
 
 		sql = sql.replace("'null'", "NULL");
 
 		Connection con = null;
-		Statement  smt = null;
+		PreparedStatement  smt = null;
 
 		try{
 
-			con = ProductDAO.getConnection();
-			smt = con.createStatement();
+			con = UserDAO.getConnection();
+			smt = con.prepareStatement(sql);
+			smt.setBytes(1, product.getImage());
 
-			smt.executeUpdate(sql);
+			smt.executeUpdate();
 
 		}
 		catch(Exception e){
@@ -335,8 +398,9 @@ public class ProductDAO{
 				product.setPrice(rs.getInt("price"));
 				product.setOn_sale(rs.getBoolean("on_sale"));
 				product.setRemark(rs.getString("remark"));
-				product.setImage(null);
-				product.setCreated_at(rs.getString("created_at").split(" ")[0]);
+				product.setImage(ImageConvert.getByteFromResult(rs, "image"));
+				String created_at = rs.getString("p.created_at");
+				product.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
 
 				list.add(product);
 			}
@@ -356,7 +420,7 @@ public class ProductDAO{
 	}
 
 	// search
-	public ArrayList<Product> searchNameAndCategory(String productname, String category){
+	public ArrayList<Product> searchNCOn_sale(String productname, String category){
 
 		//変数宣言
 		Connection con = null;
@@ -369,6 +433,7 @@ public class ProductDAO{
 				+ "INNER JOIN userinfo u ON p.sellerid = u.userid "
 				+ "WHERE productname LIKE '%" + productname + "%' "
 				+ "AND category LIKE '%" + category + "%' "
+				+ "AND on_sale = TRUE "
 				+ "ORDER BY p.created_at DESC, productid DESC";
 
 		try{
@@ -391,8 +456,9 @@ public class ProductDAO{
 				product.setPrice(rs.getInt("price"));
 				product.setOn_sale(rs.getBoolean("on_sale"));
 				product.setRemark(rs.getString("remark"));
-				product.setImage(null);
-				product.setCreated_at(rs.getString("created_at").split(" ")[0]);
+				product.setImage(ImageConvert.getByteFromResult(rs, "image"));
+				String created_at = rs.getString("p.created_at");
+				product.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
 
 				list.add(product);
 			}
@@ -448,8 +514,9 @@ public class ProductDAO{
 				product.setPrice(rs.getInt("price"));
 				product.setOn_sale(rs.getBoolean("on_sale"));
 				product.setRemark(rs.getString("remark"));
-				product.setImage(null);
-				product.setCreated_at(rs.getString("created_at").split(" ")[0]);
+				product.setImage(ImageConvert.getByteFromResult(rs, "image"));
+				String created_at = rs.getString("p.created_at");
+				product.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
 
 				list.add(product);
 			}

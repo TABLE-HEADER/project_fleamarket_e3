@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -9,7 +11,6 @@ import bean.Deal;
 import bean.Product;
 import bean.User;
 import dao.DealDAO;
-import dao.ProductDAO;
 import dao.UserDAO;
 
 public class DealListServlet extends HttpServlet{
@@ -32,6 +33,7 @@ public class DealListServlet extends HttpServlet{
 				DealDAO objDealDao = new DealDAO();
 				Deal deal = objDealDao .selectByDealid(Integer.parseInt(request.getParameter("changeid")));
 				deal.setState("発送中");
+				deal.setSent_at(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
 				objDealDao.update(deal);
 			}
 
@@ -51,7 +53,7 @@ public class DealListServlet extends HttpServlet{
 
 			// テスト用。後で必ず消すこと！！！
 			UserDAO objUserDao = new UserDAO();
-			User user = objUserDao.selectByUserid(24);
+			User user = objUserDao.selectByUserid(26);
 
 			// DAOオブジェクト宣言
 			DealDAO objDealDao = new DealDAO();
@@ -60,13 +62,13 @@ public class DealListServlet extends HttpServlet{
 			if(productname.equals("") && category.equals("")) {
 
 				// selectAllの実行
-				list = objDealDao.selectByBuyerid(user.getUserid());
+				list = objDealDao.selectBySellerid(user.getUserid());
 
 			}
 			else {
 
 				// searchNCBの実行
-				list = objDealDao.searchNCB(productname, category, user.getUserid());
+				list = objDealDao.searchNCS(productname, category, user.getUserid());
 
 			}
 

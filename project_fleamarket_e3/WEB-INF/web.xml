@@ -131,8 +131,8 @@
 		<servlet-name>myProductListMapping</servlet-name>
 		<url-pattern>/myProductList</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 		<!-- DealListServlet -->
 	<servlet>
 		<servlet-name>dealListMapping</servlet-name>
@@ -142,8 +142,8 @@
 		<servlet-name>dealListMapping</servlet-name>
 		<url-pattern>/dealList</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 		<!-- MyProductInsertServlet -->
 	<servlet>
 		<servlet-name>myProductInsertMapping</servlet-name>
@@ -153,12 +153,12 @@
 		<servlet-name>myProductInsertMapping</servlet-name>
 		<url-pattern>/myProductInsert</url-pattern>
 	</servlet-mapping>
-	
-	
-		<!-- MyProductDetailServelt -->
+
+
+		<!-- MyProductDetailServlet -->
 	<servlet>
 		<servlet-name>myProductDetailMapping</servlet-name>
-		<servlet-class>servlet.MyProductDetailServelt</servlet-class>
+		<servlet-class>servlet.MyProductDetailServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>myProductDetailMapping</servlet-name>
@@ -166,10 +166,10 @@
 	</servlet-mapping>
 
 
-		<!-- MyProductUpdateServelt -->
+		<!-- MyProductUpdateServlet -->
 	<servlet>
 		<servlet-name>myProductUpdateMapping</servlet-name>
-		<servlet-class>servlet.MyProductUpdateServelt</servlet-class>
+		<servlet-class>servlet.MyProductUpdateServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>myProductUpdateMapping</servlet-name>
@@ -186,8 +186,8 @@
 		<servlet-name>userDetailMapping</servlet-name>
 		<url-pattern>/userDetail</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 			<!-- UserUpdateServlet -->
 	<servlet>
 		<servlet-name>userUpdateMapping</servlet-name>

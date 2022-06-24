@@ -65,10 +65,8 @@ public class DealListServlet extends HttpServlet{
 			}
 			else {
 
-				// searchNameAndCategoryの実行
-				//list = objDealDao.searchNCB(productname, category, user.getUserid());
-				list = objDealDao.selectByBuyerid(user.getUserid());
-				// ここからやる（serachNCBつくる）
+				// searchNCBの実行
+				list = objDealDao.searchNCB(productname, category, user.getUserid());
 
 			}
 

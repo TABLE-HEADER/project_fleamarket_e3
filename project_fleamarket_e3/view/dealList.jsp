@@ -106,9 +106,11 @@ if(request.getParameter("category") != null){
 						<tr>
 							<td align="center" width="50"><%=deal.getProductid() %></td>
 							<td align="center" width="200"><%=deal.getProductname() %></td>
+							<td align="center" width="200"><%=deal.getNickname() %></td>
 							<td align="center" width="50"><%=deal.getQuantity() %></td>
-							<td align="center" width="100"><%=deal.getPrice() %></td>
-							<td align="center" width="100"><%=deal.getPaid_at() %></td>
+							<td align="center" width="100"><%=deal.getTotal() %></td>
+							<td align="center" width="100"><%=deal.getPaid_at() != null ? deal.getPaid_at() : "&nbsp;"%></td>
+							<td align="center" width="100"><%=deal.getSent_at() != null ? deal.getSent_at() : "&nbsp;"%></td>
 							<%switch(deal.getState()) {
 							case "入金待ち":
 								%>

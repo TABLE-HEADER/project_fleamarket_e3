@@ -49,10 +49,16 @@ public class MyProductListServlet extends HttpServlet{
 
 		try {
 
+			// delete
+			if(request.getParameter("deleteid") != null) {
+				ProductDAO objProductDao = new ProductDAO();
+				objProductDao.delete(Integer.parseInt(request.getParameter("deleteid")));
+			}
+
 			// change_on_sale
 			if(request.getParameter("changeid") != null){
 				ProductDAO objProductDao = new ProductDAO();
-				Product product = objProductDao .selectByProductid(Integer.parseInt(request.getParameter("changeid")));
+				Product product = objProductDao.selectByProductid(Integer.parseInt(request.getParameter("changeid")));
 				product.setOn_sale(!product.getOn_sale());
 				objProductDao.update(product);
 			}

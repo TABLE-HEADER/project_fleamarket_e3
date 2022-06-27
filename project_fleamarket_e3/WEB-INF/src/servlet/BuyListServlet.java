@@ -49,12 +49,12 @@ public class BuyListServlet extends HttpServlet{
 			//セッションオブジェクトの取得
 			HttpSession session = request.getSession();
 
-//			// セッション情報からユーザーの取得
-//			User user = (User)session.getAttribute("user");
+			// セッション情報からユーザーの取得
+			User user = (User)session.getAttribute("user");
 
-			// テスト用。後で必ず消すこと！！！
-			UserDAO objUserDao = new UserDAO();
-			User user = objUserDao.selectByUserid(12);
+//			// テスト用。後で必ず消すこと！！！
+//			UserDAO objUserDao = new UserDAO();
+//			User user = objUserDao.selectByUserid(12);
 
 			// DAOオブジェクト宣言
 			DealDAO objDealDao = new DealDAO();

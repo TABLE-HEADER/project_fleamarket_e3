@@ -51,19 +51,31 @@ public class BuyConfirmServlet extends HttpServlet {
 
 			String productname = product.getProductname();
 			int price = product.getPrice();
+			int stock = product.getStock();
 
-			// Dealオブジェクトに格納
+			// dealオブジェクトに格納
 			Deal deal = new Deal();
 			deal.setProductname(productname);
 			deal.setPrice(price);
 			deal.setProductid(intProductid);
 
-			// Userオブジェクトに住所格納
+			// useridの取得
 			User user = new User();
-			user.getAddress_level1();
-			user.getAddress_level2();
+			int userid = user.getUserid();
+
+			// selectByUseridを呼び出し住所の特定
+			UserDAO userDao = new UserDAO();
+			user = userDao.selectByUserid(userid);
+
+			String address_level1 = user.getAddress_level1();
+			String address_level2 = user.getAddress_level2();
+
+			// userオブジェクトに住所を格納
+			user.setAddress_level1(address_level1);
+			user.setAddress_level2(address_level2);
 
 			// buyConfirm.jspへ飛ばすリクエストスコープ
+			request.setAttribute("product", product);
 			request.setAttribute("deal", deal);
 			request.setAttribute("user", user);
 
@@ -77,7 +89,6 @@ public class BuyConfirmServlet extends HttpServlet {
 			} else {
 				// エラーありならerror.jspへフォワード処理
 				request.setAttribute("error", error);
-				request.setAttribute("cmd", cmd);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 
 			}

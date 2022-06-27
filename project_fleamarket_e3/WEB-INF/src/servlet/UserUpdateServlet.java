@@ -69,7 +69,6 @@ public class UserUpdateServlet extends HttpServlet {
 				error.add("市区町村が未入力です。");
 			} else if (address_line1.equals("")) {
 				error.add("番地等が未入力です。");
-
 			}
 
 			// メールエラー
@@ -78,7 +77,7 @@ public class UserUpdateServlet extends HttpServlet {
 			} else if ((Pattern.matches("^[0-9a-zA-Z@._]+$", email)) == false) {
 				error.add("正しいメールアドレスを入力してください。");
 			} else if (userDao.selectByEmail(email).getUsername() != null &&
-						userDao.selectByEmail(email).getUsername() != user.getUsername()) {
+						!userDao.selectByEmail(email).getUsername().equals(user.getUsername())) {
 				error.add("既に登録されたメールアドレスです。他のメールアドレスを登録してください。");
 			}
 

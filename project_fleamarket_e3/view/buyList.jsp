@@ -90,12 +90,11 @@ if(request.getParameter("category") != null){
 				<tr>
 					<th bgcolor="#6666ff" width="50">商品ID</th>
 					<th bgcolor="#6666ff" width="200">商品名</th>
-					<th bgcolor="#6666ff" width="200">取引相手</th>
 					<th bgcolor="#6666ff" width="50">個数</th>
 					<th bgcolor="#6666ff" width="100">合計金額</th>
 					<th bgcolor="#6666ff" width="100">入金日</th>
 					<th bgcolor="#6666ff" width="100">発送日</th>
-					<th bgcolor="#6666ff" width="150" colspan="2">発送状況</th>
+					<th bgcolor="#6666ff" width="150" colspan="2">入金状況</th>
 				</tr>
 
 				<%
@@ -106,7 +105,6 @@ if(request.getParameter("category") != null){
 						<tr>
 							<td align="center" width="50"><%=deal.getProductid() %></td>
 							<td align="center" width="200"><%=deal.getProductname() %></td>
-							<td align="center" width="200"><%=deal.getNickname() %></td>
 							<td align="center" width="50"><%=deal.getQuantity() %></td>
 							<td align="center" width="100"><%=deal.getTotal() %></td>
 							<td align="center" width="100"><%=deal.getPaid_at() != null ? deal.getPaid_at() : "&nbsp;"%></td>

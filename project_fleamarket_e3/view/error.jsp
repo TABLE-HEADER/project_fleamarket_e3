@@ -37,7 +37,7 @@ if (cmd == null) {
 	</head>
 	<body id="wrapper">
 		<!-- header -->
-			<%@include file="/common/header.jsp" %>
+			<%@include file="/common/public_header.jsp" %>
 
 		<!-- contents -->
 			<div>

@@ -28,18 +28,19 @@ public class ProductDetailServlet extends HttpServlet {
 		String error = "";
 		String cmd = "";
 
-		// セッションから"user"を取得する
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-
-		/* セッション切れ
-		if (user == null) {
-			error = "セッション切れの為、購入はできません。";
-			cmd = "login";
-			return;
-		}*/
+//		// セッションから"user"を取得する
+//		HttpSession session = request.getSession();
+//		User user = (User) session.getAttribute("user");
 
 		try {
+
+//			// セッション切れ
+//			if (user == null) {
+//				error = "セッション切れの為、購入はできません。";
+//				cmd = "login";
+//				return;
+//			}
+
 			request.setCharacterEncoding("UTF-8");
 
 			// productList.jspから受け取るパラメータ
@@ -77,7 +78,7 @@ public class ProductDetailServlet extends HttpServlet {
 			} else {
 				// エラー時
 				request.setAttribute("error", error);
-				// request.setAttribute("cmd", cmd);
+				request.setAttribute("cmd", cmd);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 

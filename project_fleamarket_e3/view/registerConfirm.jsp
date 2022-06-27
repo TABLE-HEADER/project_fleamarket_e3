@@ -40,7 +40,7 @@ if(registerUser != null){
 
 <html>
 	<head>
-		<title>会員登録</title>
+		<title>会員登録確認</title>
 		<style type="text/css">
 			/*
 			CSSを書く際はこの中に記述してください
@@ -170,7 +170,7 @@ if(registerUser != null){
 
 		<!-- contents -->
 			<div>
-				<h2 style="margin:15px auto 10px;">会員登録</h2>
+				<h2 style="margin:15px auto 10px;">会員登録確認</h2>
 			</div>
 
 			<script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
@@ -234,7 +234,7 @@ if(registerUser != null){
 				</tr>
 				<tr>
 					<td>
-						<span class="jusyo_support">番地等</span>
+						<span class="jusyo_support">町名・番地等</span>
 						<%= address_line1 %>
 					</td>
 				</tr>
@@ -262,7 +262,7 @@ if(registerUser != null){
 			</form>
 
 			<form action="<%= request.getContextPath() %>/register" method="post">
-				<input type="submit" value="送信する" class="send_button">
+				<input type="submit" value="登録する" class="send_button">
 			</form>
 
 		<!-- footer -->

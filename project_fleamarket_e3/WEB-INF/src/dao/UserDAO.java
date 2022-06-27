@@ -363,8 +363,8 @@ public class UserDAO{
 
 	}
 
-	// search
-	public ArrayList<User> search(String nickname){
+	// searchUsernameAndNickname
+	public ArrayList<User> searchUsernameAndNickname(String username, String nickname){
 
 		//変数宣言
 		Connection con = null;
@@ -373,7 +373,9 @@ public class UserDAO{
 		ArrayList<User> list = new ArrayList<User>();
 
 		//SQL文
-		String sql = "SELECT * FROM userinfo WHERE nickname LIKE '%" + nickname + "%' ORDER BY created_at DESC, userid DESC";
+		String sql = "SELECT * FROM userinfo WHERE username LIKE '%" + username + "%' "
+				+ "AND nickname LIKE '%" + nickname + "%' "
+				+ "ORDER BY created_at DESC, userid DESC";
 
 		try{
 			con = getConnection();

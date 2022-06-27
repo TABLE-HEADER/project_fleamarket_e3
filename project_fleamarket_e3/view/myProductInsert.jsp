@@ -133,11 +133,6 @@
 				<td><input type="text" name="price"></td>
 			</tr>
 			<tr>
-				<th style="background-color: #99FF66; width: 180">出品地域(都道府県)<font
-					size="1" color="#ff0000">必須</font></th>
-				<td><input type="text" name="address_level1"></td>
-			</tr>
-			<tr>
 				<th style="background-color: #99FF66; width: 100">商品画像</th>
 				<td valign="top">
 					<img id="thumbnail" src="" alt="イメージ"><br>

@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bean.Product;
 import bean.User;
+import dao.ProductDAO;
 import dao.UserDAO;
 
 public class UserListServlet extends HttpServlet {
@@ -24,11 +26,34 @@ public class UserListServlet extends HttpServlet {
 
 		try {
 
+			String username = "";
+			String nickname = "";
+			request.setCharacterEncoding("UTF-8");
+
+			// search
+			if(request.getParameter("username") != null){
+				username = (String)request.getParameter("username");
+			}
+			if(request.getParameter("nickname") != null){
+				nickname = (String)request.getParameter("nickname");
+			}
 			request.setCharacterEncoding("UTF-8");
 			UserDAO userDao = new UserDAO();
+			ArrayList<User> userList;
 
-			// userDAOからリスト取得
-			ArrayList<User> userList = userDao.selectAll();
+			//
+			if(username.equals("") && nickname.equals("")) {
+
+				// userDAOからリスト取得
+				userList = userDao.selectAll();
+
+			}
+			else {
+
+				// ユーザーネームで検索
+				userList = userDao.searchUsernameAndNickname(username, nickname);
+
+			}
 
 			// リクエストスコープ
 			request.setAttribute("userList", userList);

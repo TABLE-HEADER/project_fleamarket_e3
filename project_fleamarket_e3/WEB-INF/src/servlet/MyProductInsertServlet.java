@@ -1,4 +1,5 @@
 package servlet;
+
 /*
  * 機能名：出品登録機能
  * 作成者：中西りりな
@@ -29,6 +30,13 @@ public class MyProductInsertServlet extends HttpServlet {
 			// ユーザーオブジェクトを取得
 			User user = (User) session.getAttribute("user");
 
+			// セッション切れの場合ログアウト
+			if (user == null) {
+				errorMessage = "セッション切れの為、出品登録は出来ません。 ";
+				cmd = "logout";
+				return;
+			}
+
 			// 入力データの文字コードの指定
 			request.setCharacterEncoding("UTF-8");
 
@@ -43,14 +51,9 @@ public class MyProductInsertServlet extends HttpServlet {
 			String productname = request.getParameter("productname");
 			String strStock = request.getParameter("stock");
 			String strPrice = request.getParameter("price");
-			String address_level1 = request.getParameter("address_level1");
 			String remark = request.getParameter("remark");
 
 			// 全データの空白チェック(データが入力されているかどうか)
-			if (category.equals("")) {
-				error.add("カテゴリが未入力です。");
-			}
-
 			if (productname.equals("")) {
 				error.add("商品名が未入力です。");
 			}
@@ -63,16 +66,12 @@ public class MyProductInsertServlet extends HttpServlet {
 				error.add("価格が未入力です。");
 			}
 
-			if (address_level1.equals("")) {
-				error.add("出品地域(都道府県)が未入力です。");
-			}
-
 			// 個数値チェック（整数かどうか）
 			int stock = 0;
 			try {
 				stock = Integer.parseInt(strStock);
 			} catch (NumberFormatException e) {
-				error.add("個数の値が不正です");
+				error.add("個数の値が不正です。");
 			}
 
 			// 価格値チェック（整数かどうか）
@@ -80,7 +79,7 @@ public class MyProductInsertServlet extends HttpServlet {
 			try {
 				price = Integer.parseInt(strPrice);
 			} catch (NumberFormatException e) {
-				error.add("価格の値が不正です");
+				error.add("価格の値が不正です。");
 			}
 
 			if (error.size() != 0) {
@@ -89,23 +88,18 @@ public class MyProductInsertServlet extends HttpServlet {
 
 			// 入力情報をProductオブジェクトに格納
 			product.setSellerid(user.getUserid());
-			// ここは消す
-			//product.setSellerid(24);
-
 			product.setCategory(category);
 			product.setProductname(productname);
 			product.setStock(stock);
 			product.setPrice(price);
-			product.setAddress_level1(address_level1);
 			product.setRemark(remark);
 
 			// Base64型を受け取り、byte[]データにデコード
 			String str = request.getParameter("image");
 			byte[] bytes;
-			if(!str.equals("")) {
+			if (!str.equals("")) {
 				bytes = Base64.getDecoder().decode(str);
-			}
-			else {
+			} else {
 				// セッションスコープからuser情報を取得
 				bytes = product.getImage();
 			}
@@ -119,20 +113,21 @@ public class MyProductInsertServlet extends HttpServlet {
 			cmd = "logout";
 		} finally {
 
-			//未入力がある場合はmyProductInsert.jspにフォワード
+			// 未入力がある場合はmyProductInsert.jspにフォワード
 			if (error.size() != 0) {
 				request.setAttribute("error", error);
 				request.getRequestDispatcher("/view/myProductInsert.jsp").forward(request, response);
-			}
-			//エラーがある場合はerror.jspにフォワード
-			if (!errorMessage.equals("")) {
+
+			}else if (!errorMessage.equals("")) {
+				// エラーがある場合はerror.jspにフォワード
 				request.setAttribute("error", errorMessage);
 				request.setAttribute("cmd", cmd);
 				request.getRequestDispatcher("view/error.jsp").forward(request, response);
-			}
 
-			//エラーがない場合はmyProductListServletにフォワード
+			}else {
+			// エラーがない場合はmyProductListServletにフォワード
 			request.getRequestDispatcher("/myProductList").forward(request, response);
+			}
 		}
 	}
 }

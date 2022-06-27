@@ -88,7 +88,7 @@ if(request.getAttribute("category") != null){
 					<% }%>
 				</caption>
 				<tr>
-					<th bgcolor="#6666ff" width="50">&nbsp;</th>
+					<th bgcolor="#6666ff" width="50" colspan="2">&nbsp;</th>
 					<th bgcolor="#6666ff" width="50">商品ID</th>
 					<th bgcolor="#6666ff" width="200">商品カテゴリ</th>
 					<th bgcolor="#6666ff" width="200">商品名</th>
@@ -105,6 +105,10 @@ if(request.getAttribute("category") != null){
 						%>
 						<tr>
 							<td align="center" width="50"><a href="<%=request.getContextPath()%>/myProductDetail?productid=<%=product.getProductid() %>">[編集]</a></td>
+							<td align="center" width="50"><a href="#" onclick=
+							"if(window.confirm('「<%=product.getProductname() %>」を削除してもよろしいですか？')){
+								location.href = '<%=request.getContextPath()%>/myProductList?deleteid=<%=product.getProductid() %>'
+							}">[削除]</a></td>
 							<td align="center" width="50"><%=product.getProductid() %></td>
 							<td align="center" width="200"><%=product.getCategory() %></td>
 							<td align="center" width="200"><%=product.getProductname() %></td>

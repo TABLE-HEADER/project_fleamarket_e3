@@ -8,6 +8,7 @@
 <%
 	Product oldProduct = (Product) request.getAttribute("oldProduct");
 	MyFormat format = new MyFormat();
+	ArrayList<String> error = (ArrayList<String>) request.getAttribute("error");
 %>
 <html>
 <head>
@@ -84,6 +85,16 @@
 	<h2 align="center">出品内容変更</h2>
 
 	<!-- contents -->
+	<%
+		if (error != null) {
+			for (int i = 0; i < error.size(); i++) {
+	%>
+	<font size="3" color="#ff0000"><%=error.get(i)%></font>
+	<br>
+	<%
+		}
+		}
+	%>
 	<form action="<%=request.getContextPath()%>/myProductUpdate" method="post">
 		<table border=0 align="center" summary="出品内容変更画面">
 			<tr>
@@ -124,12 +135,6 @@
 				<th style="background-color: #99FF66; width: 100">価格</th>
 				<td style="background-color: #CCFF66; width: 100"><%=oldProduct.getPrice()%></td>
 				<td><input type="text" name="price" ></td>
-			</tr>
-			<tr>
-				<th style="background-color: #99FF66; width: 100">出品地域</th>
-				<td style="background-color: #CCFF66; width: 100"><%=oldProduct.getAddress_level1()%></td>
-				<td><input type="text" name="address_level1"
-					></td>
 			</tr>
 			<tr>
 				<th style="background-color: #99FF66; width: 100">商品画像</th>

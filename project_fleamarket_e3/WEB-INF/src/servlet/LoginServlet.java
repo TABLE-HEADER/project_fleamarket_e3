@@ -60,28 +60,25 @@ public class LoginServlet extends HttpServlet {
 			}
 
 			// セッション登録 リクエストの都度ではなくログイン中有効
-						HttpSession session = request.getSession();
-						session.setAttribute("user", user);
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
 
-						// email とpasswordそれぞれクッキー登録(期限：5日間）
-						Cookie emailCookie = new Cookie("email", user.getEmail());
-						emailCookie.setMaxAge(60 * 60 * 24 * 5);
-						response.addCookie(emailCookie);
+			// email とpasswordそれぞれクッキー登録(期限：5日間）
+			Cookie emailCookie = new Cookie("email", user.getEmail());
+			emailCookie.setMaxAge(60 * 60 * 24 * 5);
+			response.addCookie(emailCookie);
 
-						Cookie passCookie = new Cookie("password", user.getPassword());
-						passCookie.setMaxAge(60 * 60 * 24 * 5);
-						response.addCookie(passCookie);
+			Cookie passCookie = new Cookie("password", user.getPassword());
+			passCookie.setMaxAge(60 * 60 * 24 * 5);
+			response.addCookie(passCookie);
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、一覧表示は行えませんでした。";
 			cmd = "login";
 		} finally {
 			if (error.equals("")) {
-				// authorityによる遷移先分岐（管理者用メニュー画面orユーザー用メニュー画面
-				if (authority == true)
-					request.getRequestDispatcher("/view/menu_admin.jsp").forward(request, response);
-				if (authority == false)
-					request.getRequestDispatcher("/view/menu_user.jsp").forward(request, response);
+				request.getRequestDispatcher("/view/menu.jsp").forward(request, response);
+
 			} else {
 				// エラー時
 				request.setAttribute("error", error);

@@ -251,14 +251,14 @@ if(messageList != null && !messageList.isEmpty()){
 						<td>
 							<span class="jusyo_support">市区町村</span>
 							<input type="text" name="address_level2" value="<%= address_level2 %>"
-							placeholder="千代田区神田紺屋町" autocomplete="address-level2" class="p-locality" required="required">
+							placeholder="千代田区" autocomplete="address-level2" class="p-locality" required="required">
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<span class="jusyo_support">番地等</span>
+							<span class="jusyo_support">町名・番地</span>
 							<input type="text" name="address_line1" value="<%= address_line1 %>"
-							placeholder="11番地" autocomplete="address-line1" class="p-street-address" required="required">
+							placeholder="神田紺屋町11番地" autocomplete="address-line1" class="p-street-address" required="required">
 						</td>
 					</tr>
 					<tr>

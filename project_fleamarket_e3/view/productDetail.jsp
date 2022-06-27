@@ -8,7 +8,6 @@ Product Products = (Product) request.getAttribute("Products");
 String productid = request.getParameter("productid");
 //Productオブジェクトの生成
 Product product = new Product();
-User userObj = new User();
 boolean UserAuthority = false;
 %>
 
@@ -31,6 +30,7 @@ boolean UserAuthority = false;
 	<body id="wrapper">
 		<!-- header -->
 			<%@include file="/common/public_header.jsp" %>
+			<% UserAuthority = user != null ? user.getAuthority() : true; %>
 
 		<!-- contents -->
 			<div>
@@ -40,9 +40,9 @@ boolean UserAuthority = false;
 		<br>
 
 		選択した商品の詳細は以下の通りです。<br>
+		<%if(!UserAuthority){%>
 		よろしければ購入画面にお進みください<br>
-
-
+		<% } %>
 
 			<table align="center">
 
@@ -79,16 +79,15 @@ boolean UserAuthority = false;
 				</tr>
 				</table>
 				<form action="<%=request.getContextPath()%>/buyConfirm" method="GET">
-				<p align="center">
 
-				<%
-				UserAuthority = userObj.getAuthority();
-				if(UserAuthority = true){%>
-				<input type="hidden"  name="p_id" value="<%=productid%>">
-				<input type="submit"  value="購入画面へ">
+
+				<%if(!UserAuthority){%>
+				<p align="center">
+					<input type="hidden"  name="p_id" value="<%=productid%>">
+					<input type="submit"  value="購入画面へ">
 				</p>
 				</form>
-				 <% } %>
+				<% } %>
 
 
 		<!-- footer -->

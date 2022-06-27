@@ -53,13 +53,13 @@ if(message == null){
 		<title>ログイン画面</title>
 		<style type="text/css">
 
-	    div{
-	        text-align:center;
-	    	}
-	    table{
-	        margin-left:auto;
-	        margin-right:auto;
-	    	}
+		div{
+			text-align:center;
+			}
+		table{
+			margin-left:auto;
+			margin-right:auto;
+			}
 
 		</style>
 	</head>
@@ -101,20 +101,20 @@ if(message == null){
 
 
 				<!-- 会員登録画面へ遷移 -->
-				<form action="<%=request.getContextPath()%>/register" method="POST">
+				<form action="<%=request.getContextPath()%>/view/register.jsp" method="POST">
 				<p align="center">
 				<input type="submit" value="会員登録">
 				</p>
 				</form>
 
 				<!-- 商品一覧画面へ遷移 -->
-				<form action="<%=request.getContextPath()%>/salesList" method="POST">
+				<form action="<%=request.getContextPath()%>/salesList" method="GET">
 				<p align="center">
 				<input type="submit" value="商品一覧">
 				</p>
 				</form>
 
-        <!-- footer -->
+		<!-- footer -->
 			<footer class="footer">
 				<a href="#"class="footer_a"><div class="bottom_button_right">ページトップへ</div></a>
 				<a href="<%= request.getContextPath() %>/view/homePage.jsp" class="footer_a">

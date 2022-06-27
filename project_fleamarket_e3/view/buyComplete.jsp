@@ -1,5 +1,13 @@
+<!--
+プログラム名：buyComplete.jsp
+作成者　　　：近藤
+作成日　　　：2022/06/24
+概要　　　　：購入完了画面
+ -->
+
 <%@page contentType="text/html; charset=UTF-8" %>
-<%@page import="bean.Deal,bean.Product,bean.User"%> <!-- importの必要性が生じた場合この中に記述してください -->
+<%@page import="bean.Deal,bean.Product,bean.User"%>
+<%@page import="util.MyFormat"%>
 
 <!-- あらかじめ作動させる必要があるプログラムは以下に記述 -->
 <%
@@ -8,13 +16,13 @@ String productid = request.getParameter("productid");
 Deal deal = (Deal)request.getAttribute("deal");
 User userObj = (User)request.getAttribute("user");
 
-/*int quantity = 0;
+int quantity = 0;
 int price = 0;
 
 quantity = deal.getQuantity();
 price = deal.getPrice();
 
-*/
+MyFormat format = new MyFormat();
 %>
 <html>
 	<head>
@@ -28,6 +36,9 @@ price = deal.getPrice();
 	        margin-left:auto;
 	        margin-right:auto;
 	    	}
+	    td{
+	    	padding-left: 20px;
+	    }
 
 		</style>
 	</head>
@@ -53,21 +64,20 @@ price = deal.getPrice();
 
 						<tr>
 							<td class="td-first">個数</td>
-							<td><%=deal.getQuantity() %></td>
+							<td><%=quantity %></td>
 
 
 						</tr>
 
 						<tr>
 							<td class="td-first">価格</td>
-							<td><%=deal.getPrice() %></td>
+							<td><%=format.moneyFormat(price) %>円</td>
 
 						</tr>
 
 						<tr>
 							<td class="td-first">お届け先</td>
-							 <td><%=userObj.getAddress_level1()%></td>
-							 <td><%=userObj.getAddress_level2()%></td>
+							 <td><%=userObj.getAddress_level1()%>&nbsp;<%=userObj.getAddress_level2()%></td>
 						</tr>
 
 				</table>
@@ -78,13 +88,11 @@ price = deal.getPrice();
 							<%
 							//合計金額格納用変数
 							int totalPrice = 0;
-							int quantity = 0;
-							int price = 0;
 
 							totalPrice = quantity * price;
 
 							%>
-							 <td><%=totalPrice %></td>
+							<td><%=format.moneyFormat(totalPrice) %>円</td>
 						</tr>
 
 				<br>
@@ -106,7 +114,7 @@ price = deal.getPrice();
 				</p>
 				</form>
 
-	<form action="<%=request.getContextPath()%>/buyList" method="get">
+			<form action="<%=request.getContextPath()%>/buyList" method="get">
 				<p align="center">
 				<input type="submit" value="購入一覧を確認する">
 				</p>

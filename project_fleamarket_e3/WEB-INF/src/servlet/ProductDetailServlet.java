@@ -28,18 +28,7 @@ public class ProductDetailServlet extends HttpServlet {
 		String error = "";
 		String cmd = "";
 
-//		// セッションから"user"を取得する
-//		HttpSession session = request.getSession();
-//		User user = (User) session.getAttribute("user");
-
 		try {
-
-//			// セッション切れ
-//			if (user == null) {
-//				error = "セッション切れの為、購入はできません。";
-//				cmd = "login";
-//				return;
-//			}
 
 			request.setCharacterEncoding("UTF-8");
 
@@ -65,10 +54,7 @@ public class ProductDetailServlet extends HttpServlet {
 		} catch (IllegalStateException e) {
 			if (cmd.equals("detail")) {
 				error = "DB接続エラーの為、詳細詳細は表示できませんでした。";
-			} /*
-				 * else if (cmd.equals("update")) { error = "DB接続エラーの為、変更画面は表示できませんでした。"; } cmd
-				 * = "menu";
-				 */
+			}
 			return;
 
 		} finally {

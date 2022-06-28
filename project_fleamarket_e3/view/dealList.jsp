@@ -89,6 +89,7 @@ if(request.getParameter("category") != null){
 				</caption>
 				<tr>
 					<th bgcolor="#6666ff" width="50">商品ID</th>
+					<th bgcolor="#6666ff" width="200">商品カテゴリ</th>
 					<th bgcolor="#6666ff" width="200">商品名</th>
 					<th bgcolor="#6666ff" width="200">取引相手</th>
 					<th bgcolor="#6666ff" width="50">個数</th>
@@ -105,6 +106,7 @@ if(request.getParameter("category") != null){
 						%>
 						<tr>
 							<td align="center" width="50"><%=deal.getProductid() %></td>
+							<td align="center" width="200"><%=deal.getCategory() %></td>
 							<td align="center" width="200"><%=deal.getProductname() %></td>
 							<td align="center" width="200"><%=deal.getNickname() %></td>
 							<td align="center" width="50"><%=deal.getQuantity() %></td>

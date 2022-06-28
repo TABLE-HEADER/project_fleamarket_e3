@@ -52,9 +52,12 @@ public class BuyListServlet extends HttpServlet{
 			// セッション情報からユーザーの取得
 			User user = (User)session.getAttribute("user");
 
-//			// テスト用。後で必ず消すこと！！！
-//			UserDAO objUserDao = new UserDAO();
-//			User user = objUserDao.selectByUserid(12);
+			// セッション切れの場合ログアウト
+			if (user == null) {
+				error = "セッション切れの為、購入一覧表示は行えませんでした。";
+				cmd = "logout";
+				return;
+			}
 
 			// DAOオブジェクト宣言
 			DealDAO objDealDao = new DealDAO();
@@ -77,7 +80,7 @@ public class BuyListServlet extends HttpServlet{
 			request.setAttribute("deal_list", list);
 
 		}catch (IllegalStateException e) {
-			error = "DB接続エラーの為、一覧表示は行えませんでした。";
+			error = "DB接続エラーの為、購入一覧表示は行えませんでした。";
 			cmd = "logout";
 		}catch(Exception e){
 			error ="予期せぬエラーが発生しました。<br>"+e;

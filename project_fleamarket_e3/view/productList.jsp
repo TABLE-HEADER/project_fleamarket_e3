@@ -101,7 +101,7 @@ if(request.getParameter("category") != null){
 					for(int i = 0; i < product_list.size(); i++){
 						Product product = product_list.get(i);
 						%>
-						<tr <%=product.getStock() > 0  ? "" : "bgcolor='grey'" %>>
+						<tr <%=product.getStock() > 0  ? "" : "bgcolor='silver'" %>>
 							<td align="center" width="100"><%=product.getProductid() %></td>
 							<td align="center" width="64"><%=product.getImage() != null ? "<img src='data:image/png;base64," + ImageConvert.writeImage(ImageConvert.byteToImage(product.getImage()), request, response) + "' width='64' height='auto'>" : "-" %></td>
 							<td align="center" width="200"><%=product.getCategory() %></td>

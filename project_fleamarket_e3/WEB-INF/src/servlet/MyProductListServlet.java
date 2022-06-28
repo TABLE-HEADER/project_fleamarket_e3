@@ -69,15 +69,10 @@ public class MyProductListServlet extends HttpServlet{
 			// セッション情報からユーザーの取得
 			User user = (User)session.getAttribute("user");
 
-//			// テスト用。後で必ず消すこと！！！
-//			UserDAO objUserDao = new UserDAO();
-//			User user = objUserDao.selectByUserid(24);
-
+			// セッション切れならerror.jspへフォワード
 			if(user == null) {
-				// セッション切れならerror.jspへフォワード
-				request.setAttribute("error","セッション切れの為、メニュー画面が表示できませんでした。");
-				request.setAttribute("cmd","logout");
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+				error = "セッション切れの為、出品一覧表示は行えませんでした。";
+				cmd = "logout";
 				return;
 			}
 
@@ -102,7 +97,7 @@ public class MyProductListServlet extends HttpServlet{
 			request.setAttribute("product_list", list);
 
 		}catch (IllegalStateException e) {
-			error = "DB接続エラーの為、一覧表示は行えませんでした。";
+			error = "DB接続エラーの為、出品一覧表示は行えませんでした。";
 			cmd = "logout";
 		}catch(Exception e){
 			error ="予期せぬエラーが発生しました。<br>"+e;

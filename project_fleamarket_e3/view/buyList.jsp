@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<%@page import="java.util.ArrayList,bean.Deal" %> <!-- importの必要性が生じた場合この中に記述してください -->
+<%@page import="java.util.ArrayList,bean.Deal,bean.Product,dao.ProductDAO" %> <!-- importの必要性が生じた場合この中に記述してください -->
 
 <!-- あらかじめ作動させる必要があるプログラムは以下に記述 -->
 <%
@@ -89,6 +89,7 @@ if(request.getParameter("category") != null){
 				</caption>
 				<tr>
 					<th bgcolor="#6666ff" width="50">商品ID</th>
+					<th bgcolor="#6666ff" width="200">商品カテゴリ</th>
 					<th bgcolor="#6666ff" width="200">商品名</th>
 					<th bgcolor="#6666ff" width="50">個数</th>
 					<th bgcolor="#6666ff" width="100">合計金額</th>
@@ -98,12 +99,14 @@ if(request.getParameter("category") != null){
 				</tr>
 
 				<%
+				ProductDAO objProductDao = new ProductDAO();
 				if(deal_list != null){
 					for(int i = 0; i < deal_list.size(); i++){
 						Deal deal = deal_list.get(i);
 						%>
 						<tr>
 							<td align="center" width="50"><%=deal.getProductid() %></td>
+							<td align="center" width="200"><%=deal.getCategory() %></td>
 							<td align="center" width="200"><%=deal.getProductname() %></td>
 							<td align="center" width="50"><%=deal.getQuantity() %></td>
 							<td align="center" width="100"><%=deal.getTotal() %></td>

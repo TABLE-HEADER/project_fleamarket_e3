@@ -7,7 +7,10 @@
 package servlet;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -22,6 +25,8 @@ import bean.User;
 import dao.DealDAO;
 import dao.ProductDAO;
 import dao.UserDAO;
+import util.MyFormat;
+import util.SendMail;
 
 public class BuyCompleteServlet extends HttpServlet {
 
@@ -107,13 +112,114 @@ public class BuyCompleteServlet extends HttpServlet {
 
 			dealObjDao.insert(deal);
 
+			// 以下はメールを送るためのプログラム
+			SendMail sendMail = new SendMail();
+
+			// 買い手のUserを作る(既にuserが買い手としているので、buyerという変数はそれを参照するようにする。)
+			User buyer = user;
+
+			// 売り手のUserを作る(該当ProductからSelleridを取ってきて、それをもとにUserDAOのselectByをかける)
+			UserDAO objUserDao = new UserDAO();
+			User seller = objUserDao.selectByUserid(product.getSellerid());
+
+			// メールその1(buyer側に送信される)
+			sendMail.setFrom("system.project.team39@kanda-it-school-system.com", "神田フリマ");
+			sendMail.setRecipients(buyer.getEmail());
+			sendMail.setSubject("購入完了");
+			sendMail.setText(
+						buyer.getUsername() + "様\n\n" +
+						"神田フリマです。\n" +
+						buyer.getUsername() + "様の購入処理が完了いたしました。\n" +
+						"---------------購入した商品---------------");
+
+			String text = "【商品名】\t" + deal.getProductname() + "\n" +
+						"【個数】\t" + deal.getQuantity() + "\n" +
+						"【出品者】\t" + seller.getNickname() + "\n" +
+						"【発送元】\t" + product.getAddress_level1() + "\n" +
+						"【お届け先】\n" +
+						"郵便番号\t" + buyer.getPostal_code() + "\n" +
+						"都道府県\t" + buyer.getAddress_level1() + "\n" +
+						"市区町村\t" + buyer.getAddress_level2() + "\n" +
+						"番地等\t" + buyer.getAddress_line1() + "\n" +
+						"建物名・部屋番号\t" + buyer.getAddress_line2() + "\n\n";
+
+			sendMail.setText(text);
+
+			// 現在日時情報で初期化されたインスタンスの生成
+			Date dateObj = new Date();
+			Calendar calendarDate = Calendar.getInstance();
+			calendarDate.setTime(dateObj);
+
+			// 3日先の日付を取得したいとき
+			calendarDate.add(Calendar.DAY_OF_MONTH, 3);
+
+			// 3日先にした日付をdateObjに格納
+			dateObj = calendarDate.getTime();
+
+			SimpleDateFormat format = new SimpleDateFormat( "yyyy/MM/dd HH:mm:ss" );
+			String limitDate = format.format( dateObj );
+			String dispLimitDate = MyFormat.datetimeFormat(limitDate);
+
+			String text2 = "本日から3日以内に入金をお願いいたします。\n" +
+							"入金期限：" + dispLimitDate + "\n\n";
+
+			sendMail.setText(text2);
+
+			String footerText = "--------------------------------------\n" +
+								"このメールは神田フリマのホームページから商品購入をした方へ自動送信しております。\n" +
+								"お心当たりのない方は、恐れ入りますが下記へその旨をご連絡いただけますと幸いです。\n" +
+								"--------------------------------------\n" +
+								"神田フリマ\n" +
+								"東京都千代田区神田紺屋町１１ 岩田ビル 3F\n" +
+								"TEL ：03-5809-8321\n" +
+								"MAIL ：system.project.team39@kanda-it-school-system.com\n" +
+								"URL ：http://localhost:8080/project_fleamarket_e3/view/productList.jsp\n" +
+								"--------------------------------------\n";
+
+			sendMail.setText(footerText);
+			sendMail.sendMail();
 
 
+			// メールその2(buyer側に送信される)
+			SendMail sendMail2 = new SendMail();
+
+			sendMail2.setFrom("system.project.team39@kanda-it-school-system.com", "神田フリマ");
+			sendMail2.setRecipients(seller.getEmail());
+			sendMail2.setSubject("あなたの出品した商品が購入されました");
+			sendMail2.setText(
+						seller.getUsername() + "様\n\n" +
+						"神田フリマです。\n" +
+						seller.getUsername() + "様の出品された商品が購入されました。\n" +
+						"---------------該当商品---------------");
+
+			String text3 = "【商品名】\t" + deal.getProductname() + "\n" +
+						"【個数】\t" + deal.getQuantity() + "\n" +
+						"【出品者】\t" + seller.getNickname() + "\n" +
+						"【発送元】\t" + product.getAddress_level1() + "\n" +
+						"【発送先】\n" +
+						"郵便番号\t" + buyer.getPostal_code() + "\n" +
+						"都道府県\t" + buyer.getAddress_level1() + "\n" +
+						"市区町村\t" + buyer.getAddress_level2() + "\n" +
+						"番地等\t" + buyer.getAddress_line1() + "\n" +
+						"建物名・部屋番号\t" + buyer.getAddress_line2() + "\n\n";
+
+			sendMail2.setText(text3);
+
+			String text4 = "購入者からの入金があるまでしばらくお待ちください。\n" +
+							"入金期限：" + dispLimitDate + "\n\n";
+
+			sendMail2.setText(text4);
+
+			sendMail2.setText(footerText);
+			sendMail2.sendMail();
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、一覧表示は行えませんでした。";
 			cmd = "logout";
-		} finally {
+		} catch(Exception e) {
+			error = "予期せぬエラーが発生しました。";
+			cmd = "logout";
+		}finally {
 			// エラーなしならbuyComplete.jspへフォワード処理
 			if (error.equals("")) {
 				request.getRequestDispatcher("/view/buyComplete.jsp").forward(request, response);

@@ -36,7 +36,7 @@ int total = 0;
 <html>
 	<head>
 		<!-- "title"タグ内には画面名をつけてください(ブラウザのタブに表示されます) -->
-		<title></title>
+		<title>売上一覧</title>
 		<style type="text/css">
 			/*
 			CSSを書く際はこの中に記述してください
@@ -61,7 +61,7 @@ int total = 0;
 
 		<!-- contents -->
 			<div>
-				<h2 style="margin:15px auto;">売上げ一覧</h2>
+				<h2 style="margin:15px auto;">売上一覧</h2>
 			</div>
 
 			<div style="width:860px; margin:auto;">

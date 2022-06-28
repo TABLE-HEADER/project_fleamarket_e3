@@ -52,7 +52,7 @@ public class ProductListServlet extends HttpServlet{
 			request.setAttribute("product_list", list);
 
 		}catch (IllegalStateException e) {
-			error = "DB接続エラーの為、一覧表示は行えませんでした。";
+			error = "DB接続エラーの為、商品一覧表示は行えませんでした。";
 			cmd = "logout";
 		}catch(Exception e){
 			error ="予期せぬエラーが発生しました。<br>"+e;

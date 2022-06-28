@@ -190,7 +190,7 @@ if(user != null){
 							<a href="<%= request.getContextPath() %>/view/menu.jsp"><li>メニュー</li></a>
 							<a href="<%= request.getContextPath() %>/productList"><li>商品一覧</li></a>
 							<a href="<%= request.getContextPath() %>/userList"><li>ユーザー一覧</li></a>
-							<a href="<%= request.getContextPath() %>/salesList"><li>売上げ一覧</li></a>
+							<a href="<%= request.getContextPath() %>/salesList"><li>売上一覧</li></a>
 							<a id="logout"><li style="color:red">ログアウト</li></a>
 						</ul>
 					</div>

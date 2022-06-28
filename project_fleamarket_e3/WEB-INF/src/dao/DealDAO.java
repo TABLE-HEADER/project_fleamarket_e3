@@ -48,6 +48,7 @@ public class DealDAO{
 				deal.setDealid(rs.getInt("dealid"));
 				deal.setProductid(rs.getInt("productid"));
 				deal.setBuyerid(rs.getInt("buyerid"));
+				deal.setCategory(rs.getString("category"));
 				deal.setProductname(rs.getString("productname"));
 				deal.setNickname(rs.getString("nickname"));
 				deal.setPrice(rs.getInt("price"));
@@ -105,6 +106,7 @@ public class DealDAO{
 				deal.setDealid(rs.getInt("dealid"));
 				deal.setProductid(rs.getInt("productid"));
 				deal.setBuyerid(rs.getInt("buyerid"));
+				deal.setCategory(rs.getString("category"));
 				deal.setProductname(rs.getString("productname"));
 				deal.setNickname(rs.getString("nickname"));
 				deal.setPrice(rs.getInt("price"));
@@ -163,6 +165,7 @@ public class DealDAO{
 				deal.setDealid(rs.getInt("dealid"));
 				deal.setProductid(rs.getInt("productid"));
 				deal.setBuyerid(rs.getInt("buyerid"));
+				deal.setCategory(rs.getString("category"));
 				deal.setProductname(rs.getString("productname"));
 				deal.setNickname(rs.getString("nickname"));
 				deal.setPrice(rs.getInt("price"));
@@ -220,6 +223,7 @@ public class DealDAO{
 				deal.setDealid(rs.getInt("dealid"));
 				deal.setProductid(rs.getInt("productid"));
 				deal.setBuyerid(rs.getInt("buyerid"));
+				deal.setCategory(rs.getString("category"));
 				deal.setProductname(rs.getString("productname"));
 				deal.setNickname(rs.getString("nickname"));
 				deal.setPrice(rs.getInt("price"));
@@ -393,6 +397,7 @@ public class DealDAO{
 				deal.setDealid(rs.getInt("dealid"));
 				deal.setProductid(rs.getInt("productid"));
 				deal.setBuyerid(rs.getInt("buyerid"));
+				deal.setCategory(rs.getString("category"));
 				deal.setProductname(rs.getString("productname"));
 				deal.setNickname(rs.getString("nickname"));
 				deal.setPrice(rs.getInt("price"));
@@ -451,6 +456,7 @@ public class DealDAO{
 				deal.setDealid(rs.getInt("dealid"));
 				deal.setProductid(rs.getInt("productid"));
 				deal.setBuyerid(rs.getInt("buyerid"));
+				deal.setCategory(rs.getString("category"));
 				deal.setProductname(rs.getString("productname"));
 				deal.setNickname(rs.getString("nickname"));
 				deal.setPrice(rs.getInt("price"));
@@ -511,6 +517,7 @@ public class DealDAO{
 				deal.setDealid(rs.getInt("dealid"));
 				deal.setProductid(rs.getInt("productid"));
 				deal.setBuyerid(rs.getInt("buyerid"));
+				deal.setCategory(rs.getString("category"));
 				deal.setProductname(rs.getString("productname"));
 				deal.setNickname(rs.getString("nickname"));
 				deal.setPrice(rs.getInt("price"));
@@ -571,6 +578,7 @@ public class DealDAO{
 				deal.setDealid(rs.getInt("dealid"));
 				deal.setProductid(rs.getInt("productid"));
 				deal.setBuyerid(rs.getInt("buyerid"));
+				deal.setCategory(rs.getString("category"));
 				deal.setProductname(rs.getString("productname"));
 				deal.setNickname(rs.getString("nickname"));
 				deal.setPrice(rs.getInt("price"));
@@ -630,6 +638,7 @@ public class DealDAO{
 				deal.setDealid(rs.getInt("dealid"));
 				deal.setProductid(rs.getInt("productid"));
 				deal.setBuyerid(rs.getInt("buyerid"));
+				deal.setCategory(rs.getString("category"));
 				deal.setProductname(rs.getString("productname"));
 				deal.setNickname(rs.getString("nickname"));
 				deal.setPrice(rs.getInt("price"));

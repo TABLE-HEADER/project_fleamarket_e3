@@ -6,6 +6,7 @@ public class Deal {
 	private int	dealid;
 	private int	productid;
 	private int	buyerid;
+	private String	category;
 	private String	productname;
 	private String	nickname;
 	private int	price;
@@ -21,6 +22,7 @@ public class Deal {
 		this.dealid	= 0;
 		this.productid	= 0;
 		this.buyerid	= 0;
+		this.category	= null;
 		this.productname	= null;
 		this.nickname	= null;
 		this.price	= 0;
@@ -33,10 +35,11 @@ public class Deal {
 	}
 
 	// 引数有りコンストラクタ
-	public Deal(int dealid, int productid, int buyerid, String productname, String nickname, int price, int quantity, int total, String state, String bought_at, String paid_at, String sent_at) {
+	public Deal(int dealid, int productid, int buyerid, String category, String productname, String nickname, int price, int quantity, int total, String state, String bought_at, String paid_at, String sent_at) {
 		this.dealid	= dealid;
 		this.productid	= productid;
 		this.buyerid	= buyerid;
+		this.category	= category;
 		this.productname	= productname;
 		this.nickname	= nickname;
 		this.price	= price;
@@ -57,6 +60,9 @@ public class Deal {
 	}
 	public void setBuyerid(int buyerid) {
 		this.buyerid = buyerid;
+	}
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	public void setProductname(String productname) {
 		this.productname = productname;
@@ -95,6 +101,9 @@ public class Deal {
 	}
 	public int getBuyerid() {
 		return this.buyerid;
+	}
+	public String getCategory() {
+		return this.category;
 	}
 	public String getProductname() {
 		return this.productname;

@@ -13,9 +13,6 @@
 
 <!-- あらかじめ作動させる必要があるプログラムは以下に記述 -->
 <%
-//ユーザーの権限authorityを取得し、購入ボタンの表示・非表示の条件分岐に備える
-User userAuthority = new User();
-boolean nowAuthority = userAuthority.getAuthority();
 
 //BuyConfirmServletからリクエストスコープを取得する
 Product Products = (Product) request.getAttribute("product");
@@ -100,7 +97,7 @@ int stock = Products.getStock() ;
 
 
 				<!-- ユーザー権限の場合のみ購入画面への遷移が可能 -->
-				<%if(nowAuthority == false){ %>
+				<%if(user.getAuthority() == false){ %>
 				<p align="center">
 				<input type="hidden"  name="pro_id" value="<%=productid%>">
 				<input type="hidden"  name="stock" value="<%=stock%>">
@@ -109,7 +106,7 @@ int stock = Products.getStock() ;
 				</form>
 				<%} %>
 
-			<form action="<%=request.getContextPath()%>/productDetail" method=""GET">
+			<form action="<%=request.getContextPath()%>/productDetail" method="GET">
 				<p align="center">
 				<input type="hidden"  name="productid" value="<%=productid%>">
 				<input type="submit" value="商品詳細画面へ戻る">

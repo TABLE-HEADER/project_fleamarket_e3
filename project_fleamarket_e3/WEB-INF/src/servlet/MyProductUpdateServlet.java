@@ -126,8 +126,8 @@ public class MyProductUpdateServlet extends HttpServlet {
 				request.getRequestDispatcher("view/error.jsp").forward(request, response);
 
 			}else {
-			// エラーがない場合はmyProductListServletにフォワード
-			request.getRequestDispatcher("/myProductList").forward(request, response);
+				// エラーがない場合はmyProductListServletにフォワード
+				request.getRequestDispatcher("/myProductList").forward(request, response);
 			}
 		}
 	}

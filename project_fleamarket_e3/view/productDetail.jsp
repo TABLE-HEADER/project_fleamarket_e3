@@ -40,7 +40,7 @@ boolean UserAuthority = false;
 		<br>
 
 		選択した商品の詳細は以下の通りです。<br>
-		<%if(!UserAuthority){%>
+		<%if(!UserAuthority && Products.getStock() > 0){%>
 		よろしければ購入画面にお進みください<br>
 		<% } %>
 
@@ -81,7 +81,7 @@ boolean UserAuthority = false;
 				<form action="<%=request.getContextPath()%>/buyConfirm" method="GET">
 
 
-				<%if(!UserAuthority){%>
+				<%if(!UserAuthority && Products.getStock() > 0){%>
 				<p align="center">
 					<input type="hidden"  name="p_id" value="<%=productid%>">
 					<input type="submit"  value="購入画面へ">

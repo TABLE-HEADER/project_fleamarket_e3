@@ -20,116 +20,9 @@ if(user != null){
 <html>
 	<head>
 		<title></title>
+		<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/header-footerStyle.css">
 		<style type="text/css">
-			#wrapper{
-				max-width:1200px;
-				margin:0px auto 0px;
-				text-align:center;
-				font-family:"游ゴシック Medium","Yu Gothic Medium";
-				font-weight: bold;
-				color: #464646;
-			}
-			button, input, select, textarea, th, td, li {
-				font-family : inherit;
-			}
-			button:hover, a:hover{
-				cursor:pointer;
-			}
-			form{
-				margin-block-end:0em;
-			}
-			.kome{
-				font-size:small;
-			}
-			#menu{
-				float:right;
-			}
-			#menu_ul, #admin_menu_ul{
-				display:flex;
-				width:700px;
-				padding:10px;
-				margin:0px;
-				flex-direction: row;
-				flex-wrap: wrap;
-				justify-content:flex-end;
-			}
-			#menu_ul li, #admin_menu_ul li{
-				list-style: none;
-				width:150px;
-				padding:5px;
-			}
-			#menu_ul li:hover{
-				background-color:#ffa50069;
-				transition:0.2s;
-			}
-			#admin_menu_ul li:hover{
-				background-color:#00800069;
-				transition:0.2s;
-			}
-			#menu_ul a, #admin_menu_ul a{
-				text-decoration: none;
-				color:inherit;
-			}
-			.footer{
-				position:sticky;
-				bottom:0; top:100vh;
-				width:100%;
-				font-size:small;
-			}
-			.copyright{
-				font-size:small;
-				height:25px;
-			}
-			.hr, .admin_hr{
-				margin:8px auto 0px;
-				clear: both;
-				height:2px;
-				background-color:orange;
-			}
-			.admin_hr{
-				background-color:green;
-			}
-			.bottom_button_right, .admin_bottom_button_right{
-				float:right;
-				height:25px;
-				width:150px;
-				padding:3px 5px 1px;
-				margin:10px 0px 0px 1px;
-				border-top:2px solid orange;
-				border-right:2px solid orange;
-				border-left:2px solid orange;
-				border-radius: 8px 8px 0 0;
 
-				background-color:#ffff0054;
-				color: #464646;
-				font-size:medium;
-			}
-			.footer_a{
-				text-decoration: none;
-			}
-			.bottom_button_right:hover, .admin_bottom_button_right:hover{
-				cursor: pointer;
-				background-color:#ffb70054;
-			}
-			.bottom_button_right:active{
-				border-top: 2px inset #ff6800;
-				border-right: 2px inset #ff6800;
-				border-left: 2px inset #ff6800;
-			}
-			.admin_bottom_button_right{
-				border-top:2px solid green;
-				border-right:2px solid green;
-				border-left:2px solid green;
-				background-color:#9bff7f54;
-			}
-			.admin_bottom_button_right:hover{
-				background-color:#9bff7fd1;
-			}
-			.admin_bottom_button_right:active{
-				border-top: 2px inset #005200;
-				border-right: 2px inset #005200;
-				border-left: 2px inset #005200;
-			}
 		</style>
 	</head>
 	<body id="wrapper">
@@ -197,14 +90,16 @@ if(user != null){
 					<hr class="admin_hr"/>
 				<% } %>
 				<script type="text/javascript">
-					// ボタンを押したら
-					document.getElementById('logout').onclick = function() {
-						var result = window.confirm("ログアウトします。よろしいですか？");
+					// ログアウトボタンを(存在する場合)取得
+					const logout = document.getElementById("logout");
+					if(logout !== null){
+						// ボタンを押したら
+						document.getElementById('logout').onclick = function() {
+							var result = window.confirm("ログアウトします。よろしいですか？");
 
-						if(result){
-							window.location.href = "http://localhost:8080/project_fleamarket_e3/logout";
-						}else{
-							// このページにとどまるので何も書いていない
+							if(result){
+								window.location.href = "http://localhost:8080/project_fleamarket_e3/logout";
+							}
 						}
 					}
 				</script>

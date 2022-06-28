@@ -535,6 +535,74 @@ public class ProductDAO{
 		return list;
 	}
 
+	// searchInDetail
+	public ArrayList<Product> searchInDetail(String productname, String category, int minprice, int maxprice, String region, boolean in_stock) {
+
+		//変数宣言
+		Connection con = null;
+		Statement  smt = null;
+		Product product;
+		ArrayList<Product> list = new ArrayList<Product>();
+
+		//SQL文
+		String sql = "SELECT * FROM productinfo p "
+				+ "INNER JOIN userinfo u ON p.sellerid = u.userid "
+				+ "WHERE productname LIKE '%" + productname + "%' "
+				+ "AND category LIKE '%" + category + "%' ";
+
+		if(minprice != 0) {
+			sql += "AND price BETWEEN " + minprice + " AND " + maxprice + " ";
+		}
+		if(region != "") {
+			sql += "AND address_level1 = '" + region + "' ";
+		}
+		if(in_stock) {
+			sql += "AND stock > 0 ";
+		}
+
+		sql += "AND on_sale = TRUE "
+		+ "ORDER BY p.created_at DESC, productid DESC";
+
+		try{
+			con = getConnection();
+			smt = con.createStatement();
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			//取得した結果をProductオブジェクトに格納
+			while(rs.next()){
+				product = new Product();
+				product.setProductid(rs.getInt("productid"));
+				product.setSellerid(rs.getInt("sellerid"));
+				product.setNickname(rs.getString("nickname"));
+				product.setAddress_level1(rs.getString("address_level1"));
+				product.setDeal_count(rs.getInt("deal_count"));
+				product.setProductname(rs.getString("productname"));
+				product.setCategory(rs.getString("category"));
+				product.setStock(rs.getInt("stock"));
+				product.setPrice(rs.getInt("price"));
+				product.setOn_sale(rs.getBoolean("on_sale"));
+				product.setRemark(rs.getString("remark"));
+				product.setImage(ImageConvert.getByteFromResult(rs, "image"));
+				String created_at = rs.getString("p.created_at");
+				product.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
+
+				list.add(product);
+			}
+
+		}catch(Exception e){
+			throw new IllegalStateException(e);
+		}finally{
+			//リソースの開放
+			if(smt != null){
+				try{smt.close();}catch(SQLException ignore){}
+			}
+			if(con != null){
+				try{con.close();}catch(SQLException ignore){}
+			}
+		}
+		return list;
+	}
 
 }
 

@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<%@page import="java.util.ArrayList,bean.Deal" %> <!-- importの必要性が生じた場合この中に記述してください -->
+<%@page import="java.util.ArrayList,bean.Deal, util.MyFormat" %> <!-- importの必要性が生じた場合この中に記述してください -->
 
 <!-- あらかじめ作動させる必要があるプログラムは以下に記述 -->
 <%
@@ -20,6 +20,7 @@ if(request.getParameter("category") != null){
 
 <html>
 	<head>
+		<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/commonStyle.css">
 		<!-- "title"タグ内には画面名をつけてください(ブラウザのタブに表示されます) -->
 		<title>取引一覧</title>
 		<style type="text/css">
@@ -39,7 +40,7 @@ if(request.getParameter("category") != null){
 				<h2 style="margin:15px auto 10px;">取引一覧</h2>
 			</div>
 
-			<table align="center">
+			<table align="center" style="margin:30px auto 5px;">
 				<tr>
 					<td>
 						<form action="<%=request.getContextPath()%>/dealList">
@@ -75,7 +76,7 @@ if(request.getParameter("category") != null){
 
 			<br>
 
-			<table align="center">
+			<table align="center" class="list_table">
 				<caption>
 					<%if(productname.equals("") && category.equals("")) {%>
 						全件表示（<%=deal_list != null ? deal_list.size() : 0%>件）
@@ -90,13 +91,13 @@ if(request.getParameter("category") != null){
 				<tr>
 					<th bgcolor="#6666ff" width="50">商品ID</th>
 					<th bgcolor="#6666ff" width="200">商品カテゴリ</th>
-					<th bgcolor="#6666ff" width="200">商品名</th>
-					<th bgcolor="#6666ff" width="200">取引相手</th>
+					<th bgcolor="#6666ff" width="145">商品名</th>
+					<th bgcolor="#6666ff" width="145">取引相手</th>
 					<th bgcolor="#6666ff" width="50">個数</th>
 					<th bgcolor="#6666ff" width="100">合計金額</th>
-					<th bgcolor="#6666ff" width="100">入金日</th>
-					<th bgcolor="#6666ff" width="100">発送日</th>
-					<th bgcolor="#6666ff" width="150" colspan="2">発送状況</th>
+					<th bgcolor="#6666ff" width="120">入金日</th>
+					<th bgcolor="#6666ff" width="120">発送日</th>
+					<th bgcolor="#6666ff" width="220" colspan="2">発送状況</th>
 				</tr>
 
 				<%
@@ -105,30 +106,30 @@ if(request.getParameter("category") != null){
 						Deal deal = deal_list.get(i);
 						%>
 						<tr>
-							<td align="center" width="50"><%=deal.getProductid() %></td>
-							<td align="center" width="200"><%=deal.getCategory() %></td>
-							<td align="center" width="200"><%=deal.getProductname() %></td>
-							<td align="center" width="200"><%=deal.getNickname() %></td>
-							<td align="center" width="50"><%=deal.getQuantity() %></td>
-							<td align="center" width="100"><%=deal.getTotal() %></td>
-							<td align="center" width="100"><%=deal.getPaid_at() != null ? deal.getPaid_at() : "&nbsp;"%></td>
-							<td align="center" width="100"><%=deal.getSent_at() != null ? deal.getSent_at() : "&nbsp;"%></td>
+							<td align="center"><%=deal.getProductid() %></td>
+							<td align="center"><%=deal.getCategory() %></td>
+							<td align="center"><%=deal.getProductname() %></td>
+							<td align="center"><%=deal.getNickname() %></td>
+							<td align="center"><%=deal.getQuantity() %></td>
+							<td align="center"><%=MyFormat.moneyFormat(deal.getTotal()) %>円</td>
+							<td align="center"><%=deal.getPaid_at() != null ? MyFormat.birthdayFormat(deal.getPaid_at()) : "&nbsp;"%></td>
+							<td align="center"><%=deal.getSent_at() != null ? MyFormat.birthdayFormat(deal.getSent_at()) : "&nbsp;"%></td>
 							<%switch(deal.getState()) {
 							case "入金待ち":
 								%>
-									<td bgcolor="wheat" width="80">入金待ち<td>
+									<td style="background-color:wheat; width:80;">入金待ち<td>
 									<button disabled>発送完了</button>
 								<%
 								break;
 							case "発送待ち":
 								%>
-									<td bgcolor="lightpink" width="80">発送待ち<td>
+									<td style="background-color:lightpink; width:80;">発送待ち<td>
 									<button onclick="location.href='<%=request.getContextPath()%>/dealList?changeid=<%=deal.getDealid() %>'">発送完了</button>
 								<%
 								break;
 							case "発送中":
 								%>
-									<td bgcolor="skyblue" width="80">発送中<td>
+									<td style="background-color:skyblue; width:80;">発送中<td>
 									<button disabled>発送完了</button>
 								<%
 								break;

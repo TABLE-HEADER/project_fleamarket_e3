@@ -16,20 +16,13 @@ if(user != null){
 	name = user.getNickname();
 }
 
-if(user == null){
-	// セッション切れならerror.jspへフォワード
-	request.setAttribute("error","セッション切れの為、画面が表示できませんでした。");
-	request.setAttribute("cmd","logout");
-	request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-	return;
-}
 %>
 <html>
 	<head>
 		<title></title>
 		<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/header-footerStyle.css">
 		<style type="text/css">
-		
+
 		</style>
 	</head>
 	<body id="wrapper">
@@ -97,16 +90,14 @@ if(user == null){
 					<hr class="admin_hr"/>
 				<% } %>
 				<script type="text/javascript">
-					// ログアウトボタンを(存在する場合)取得
-					const logout = document.getElementById("logout");
-					if(logout !== null){
-						// ボタンを押したら
-						document.getElementById('logout').onclick = function() {
-							var result = window.confirm("ログアウトします。よろしいですか？");
+					// ボタンを押したら
+					document.getElementById('logout').onclick = function() {
+						var result = window.confirm("ログアウトします。よろしいですか？");
 
-							if(result){
-								window.location.href = "http://localhost:8080/project_fleamarket_e3/logout";
-							}
+						if(result){
+							window.location.href = "http://localhost:8080/project_fleamarket_e3/logout";
+						}else{
+							// このページにとどまるので何も書いていない
 						}
 					}
 				</script>

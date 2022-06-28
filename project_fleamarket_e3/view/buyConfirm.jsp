@@ -27,19 +27,20 @@ int stock = Products.getStock() ;
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<head>
+		<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/commonStyle.css">
 		<!-- "title"タグ内には画面名をつけてください(ブラウザのタブに表示されます) -->
 		<title>購入品確認</title>
 		<style type="text/css">
 			div{
-	        text-align:center;
-	    	}
-		    table{
-	        margin-left:auto;
-	        margin-right:auto;
-	    	}
-	    	td{
-	    		padding-left: 20px;
-	    	}
+				text-align:center;
+			}
+			table{
+				margin:30px auto;
+			}
+			td{
+				padding-left: 20px;
+				width:250px;
+			}
 
 		</style>
 	</head>
@@ -51,67 +52,55 @@ int stock = Products.getStock() ;
 			<div>
 				<h2 style="margin:15px auto 10px;">購入品確認</h2>
 			</div>
+
 			<form action="<%=request.getContextPath()%>/buyComplete" method="GET">
 
-			<table>
-						<tr>
+				<table class="list_table" style="margin:30px auto;">
+					<tr>
+						<th class="td-first">商品名</th>
+						<td><%=deal.getProductname() %></td>
+					</tr>
+					<tr>
+						<th class="td-first">単価</th>
+						<td><%=format.moneyFormat(deal.getPrice()) %>円 </td>
+					</tr>
+					<tr>
+						<th class="td-first">個数</th>
+						<td><input id="quantity" type="number" name="quantity" value="1" min="1"
+							 max="<%=stock%>" style="width:100px" required> /在庫数：<%=stock%></td>
+					</tr>
+					<tr>
+						<th class="td-first">合計金額</th>
+						<td id="total"><%=MyFormat.moneyFormat(deal.getPrice()) %>円</td>
+					</tr>
+					<tr>
+						<th class="td-first">お届け先</th>
+						<td><%=user.getAddress_level1()%>&nbsp;<%=user.getAddress_level2()%></td>
+					</tr>
+				</table>
 
-
-							<td class="td-first">商品名</td>
-							<td><%=deal.getProductname() %></td>
-
-						</tr>
-
-						<tr>
-							<td class="td-first">単価</td>
-							<td><%=format.moneyFormat(deal.getPrice()) %>円 </td>
-						</tr>
-
-						<tr>
-							<td class="td-first">個数</td>
-							 <td><input id="quantity" type="number" name="quantity" value="1" min="1" max="<%=stock%>" style="width:100px" required></td>
-							 <td>/在庫数：<%=stock%></td>
-						</tr>
-
-						<tr>
-							<td class="td-first">合計金額</td>
-							<td id="total"><%=format.moneyFormat(deal.getPrice()) %>円</td>
-						<tr>
-							<td class="td-first">お届け先</td>
-							 <td><%=user.getAddress_level1()%>&nbsp;<%=user.getAddress_level2()%></td>
-						</tr>
-
-
-</table>
-				<br>
-				<br>
-				<br>
+				<!--
 				<strong>
 				上記の商品を購入でよろしいですか？<br>
 				個数を入力の上<br>
 				よろしければ、購入決定ボタンを、<br>
 				内容に変更がある場合は修正ボタンを押してください。
 				</strong>
-
-
-
+				-->
 
 				<!-- ユーザー権限の場合のみ購入画面への遷移が可能 -->
 				<%if(user.getAuthority() == false){ %>
-				<p align="center">
-				<input type="hidden"  name="pro_id" value="<%=productid%>">
-				<input type="hidden"  name="stock" value="<%=stock%>">
-				<input type="submit" value="購入決定">
-				</p>
+					<input type="hidden"  name="pro_id" value="<%=productid%>">
+					<input type="hidden"  name="stock" value="<%=stock%>">
+					<input type="submit" value="購入決定" class="register_button">
 				</form>
 				<%} %>
 
 			<form action="<%=request.getContextPath()%>/productDetail" method="GET">
-				<p align="center">
 				<input type="hidden"  name="productid" value="<%=productid%>">
-				<input type="submit" value="商品詳細画面へ戻る">
-				</p>
-				</form>
+				<input type="submit" value="商品詳細画面へ戻る" class="login_button" style="width:200px;">
+
+			</form>
 
 
 

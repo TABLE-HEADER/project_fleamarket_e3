@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<%@page import="java.util.ArrayList,bean.Product" %> <!-- importの必要性が生じた場合この中に記述してください -->
+<%@page import="java.util.ArrayList,bean.Product, util.MyFormat" %> <!-- importの必要性が生じた場合この中に記述してください -->
 
 <!-- あらかじめ作動させる必要があるプログラムは以下に記述 -->
 <%
@@ -20,6 +20,7 @@ if(request.getAttribute("category") != null){
 
 <html>
 	<head>
+		<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/commonStyle.css">
 		<!-- "title"タグ内には画面名をつけてください(ブラウザのタブに表示されます) -->
 		<title>マイ出品一覧</title>
 		<style type="text/css">
@@ -39,7 +40,7 @@ if(request.getAttribute("category") != null){
 				<h2 style="margin:15px auto 10px;">マイ出品一覧</h2>
 			</div>
 
-			<table align="center">
+			<table align="center" style="margin:30px auto 5px;">
 				<tr>
 					<td>
 						<form action="<%=request.getContextPath()%>/myProductList">
@@ -75,7 +76,7 @@ if(request.getAttribute("category") != null){
 
 			<br>
 
-			<table align="center">
+			<table align="center" class="list_table">
 				<caption>
 					<%if(productname.equals("") && category.equals("")) {%>
 						全件表示（<%=product_list != null ? product_list.size() : 0%>件）
@@ -94,8 +95,8 @@ if(request.getAttribute("category") != null){
 					<th bgcolor="#6666ff" width="200">商品名</th>
 					<th bgcolor="#6666ff" width="50">在庫</th>
 					<th bgcolor="#6666ff" width="100">単価</th>
-					<th bgcolor="#6666ff" width="100">登録日</th>
-					<th bgcolor="#6666ff" width="150" colspan="2">出品状況</th>
+					<th bgcolor="#6666ff" width="120">登録日</th>
+					<th bgcolor="#6666ff" width="130" colspan="2">出品状況</th>
 				</tr>
 
 				<%
@@ -109,18 +110,18 @@ if(request.getAttribute("category") != null){
 							"if(window.confirm('「<%=product.getProductname() %>」を削除してもよろしいですか？')){
 								location.href = '<%=request.getContextPath()%>/myProductList?deleteid=<%=product.getProductid() %>'
 							}">[削除]</a></td>
-							<td align="center" width="50"><%=product.getProductid() %></td>
-							<td align="center" width="200"><%=product.getCategory() %></td>
-							<td align="center" width="200"><%=product.getProductname() %></td>
-							<td align="center" width="50"><%=product.getStock() %></td>
-							<td align="center" width="100"><%=product.getPrice() %></td>
-							<td align="center" width="100"><%=product.getCreated_at() %></td>
+							<td align="center"><%=product.getProductid() %></td>
+							<td align="center"><%=product.getCategory() %></td>
+							<td align="center"><%=product.getProductname() %></td>
+							<td align="center"><%=product.getStock() %></td>
+							<td align="center"><%=MyFormat.moneyFormat(product.getPrice()) %>円</td>
+							<td align="center"><%=MyFormat.birthdayFormat(product.getCreated_at()) %></td>
 							<%if(product.getOn_sale()) { %>
-								<td bgcolor="skyblue" width="100">出品中<td>
+								<td style="background-color:skyblue; width:80;">出品中<td>
 								<button onclick="location.href='<%=request.getContextPath()%>/myProductList?changeid=<%=product.getProductid() %>'">出品取消</button>
 							<%}
 							else {%>
-								<td bgcolor="wheat" width="100">出品待ち<td>
+								<td style="background-color:wheat; width:80;">出品待ち<td>
 								<button onclick="location.href='<%=request.getContextPath()%>/myProductList?changeid=<%=product.getProductid() %>'">出品</button>
 							<%} %>
 						</tr>

@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<%@page import="bean.Product,util.ImageConvert"%> <!-- importの必要性が生じた場合この中に記述してください -->
+<%@page import="bean.Product,util.ImageConvert, util.MyFormat"%> <!-- importの必要性が生じた場合この中に記述してください -->
 
 <!-- あらかじめ作動させる必要があるプログラムは以下に記述 -->
 <%
@@ -13,18 +13,24 @@ boolean UserAuthority = false;
 
 <html>
 	<head>
+		<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/commonStyle.css">
 		<!-- "title"タグ内には画面名をつけてください(ブラウザのタブに表示されます) -->
 		<title>商品詳細</title>
 		<style type="text/css">
-			 div{
-	        text-align:center;
-	    	}
-	    table{
-	        margin-left:auto;
-	        margin-right:auto;
-	    	}
-
-
+			div{
+				text-align:center;
+			}
+			table{
+				border-collapse:collapse;
+				border:1px solid gray;
+				margin:5px auto 30px;
+			}
+			table th{
+				width:100;
+			}
+			table td{
+				width:400;
+			}
 		</style>
 	</head>
 	<body id="wrapper">
@@ -36,57 +42,53 @@ boolean UserAuthority = false;
 			<div>
 				<h2 style="margin:15px auto 10px;">商品詳細</h2>
 			</div>
-		<br>
-		<br>
 
-		選択した商品の詳細は以下の通りです。<br>
-		<%if(!UserAuthority && Products.getStock() > 0){%>
-		よろしければ購入画面にお進みください<br>
-		<% } %>
+			<!-- 選択した商品の詳細は以下の通りです。<br> -->
+			<br>
+			<%if(!UserAuthority && Products.getStock() > 0){%>
+			購入する場合は「購入画面へ」をクリック！<br>
+			<% } %>
 
-			<table align="center">
+			<table align="center" class="list_table">
 
 				<tr>
-					<td bgcolor="#6666ff" width="100">商品名</td>
-					<td bgcolor="#99ffff" width="400"><%=Products.getProductname() %></td>
+					<th>商品名</th>
+					<td><%=Products.getProductname() %></td>
 				</tr>
 				<tr>
-					<td bgcolor="#6666ff" width="100">商品画像</td>
-					<td bgcolor="#99ffff" width="400"><%=Products.getImage() != null ? "<img src='data:image/png;base64," + ImageConvert.writeImage(ImageConvert.byteToImage(Products.getImage()), request, response) + "' width='256' height='auto'>" : "-" %></td>
+					<th>商品画像</th>
+					<td><%=Products.getImage() != null ? "<img src='data:image/png;base64," + ImageConvert.writeImage(ImageConvert.byteToImage(Products.getImage()), request, response) + "' width='256' height='auto'>" : "-" %></td>
 				</tr>
 				<tr>
-					<td bgcolor="#6666ff" width="100">出品ユーザー</td>
-					<td bgcolor="#99ffff" width="400"><%=Products.getNickname() %></td>
+					<th>出品ユーザー</th>
+					<td><%=Products.getNickname() %></td>
 				</tr>
 				<tr>
-					<td bgcolor="#6666ff" width="100">価格</td>
-					<td bgcolor="#99ffff" width="400"><%=Products.getPrice() %></td>
+					<th>価格</th>
+					<td><%= MyFormat.moneyFormat(Products.getPrice()) %>円</td>
 				</tr>
 				<tr>
-					<td bgcolor="#6666ff" width="100">在庫</td>
-					<td bgcolor="#99ffff" width="400"><%=Products.getStock() %></td>
+					<th>在庫</th>
+					<td><%=Products.getStock() %>個</td>
 				</tr>
 				<tr>
-					<td bgcolor="#6666ff" width="100">備考</td>
-					<td bgcolor="#99ffff" width="400"><%=Products.getRemark() %></td>
+					<th>備考</th>
+					<td><%=Products.getRemark() %></td>
 				</tr>
 				<tr>
-					<td bgcolor="#6666ff" width="100">カテゴリ</td>
-					<td bgcolor="#99ffff" width="400"><%=Products.getCategory() %></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">&nbsp;</td>
+					<th>カテゴリ</th>
+					<td><%=Products.getCategory() %></td>
 				</tr>
 				</table>
 				<form action="<%=request.getContextPath()%>/buyConfirm" method="GET">
 
 
 				<%if(!UserAuthority && Products.getStock() > 0){%>
-				<p align="center">
-					<input type="hidden"  name="p_id" value="<%=productid%>">
-					<input type="submit"  value="購入画面へ">
-				</p>
-				</form>
+					<p align="center">
+						<input type="hidden"  name="p_id" value="<%=productid%>">
+						<input type="submit"  value="購入画面へ" class="login_button">
+					</p>
+					</form>
 				<% } %>
 
 

@@ -1,0 +1,255 @@
+#wrapper{
+	max-width:1200px;
+	margin:0px auto 0px;
+	text-align:center;
+	font-family:"游ゴシック Medium","Yu Gothic Medium";
+	font-weight: bold;
+	color: #464646;
+}
+button, input, select, textarea, th, td, li {
+	font-family : inherit;
+}
+button:hover, a:hover{
+	cursor:pointer;
+}
+textarea{
+	padding:3px;
+	resize: none;
+}
+form{
+	margin-block-end:0em;
+}
+li{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+}
+input{
+	padding:3px;
+}
+.kome{
+	font-size:small;
+}
+
+
+/* menu.jspで用いるCSS */
+.main_menu_ul, .admin_main_menu_ul{
+	margin:10px auto;
+	width:200px;
+	padding:0px 0px 0px 0px;
+	text-align:center;
+}
+.main_menu_ul a,.admin_main_menu_ul a{
+	display: block;
+	width:200px;
+	color:inherit;
+}
+.main_menu_ul li, .admin_main_menu_ul li{
+	width:190px;
+	padding:7px 5px;
+	text-align:center;
+}
+.main_menu_ul a:hover{
+	background-color:#ffa50069;
+	transition:0.1s;
+}
+.main_menu_ul a:active{
+	background-color:#ffa500b8;
+	color:gray;
+}
+.admin_main_menu_ul a:hover{
+	background-color:#00800069;
+	transition:0.1s;
+}
+.admin_main_menu_ul a:active{
+	background-color:#008000a1;
+	color:black;
+}
+
+
+/* productList.jspで用いるCSS */
+.list_table{
+	border-collapse:collapse;
+	border:1px solid gray;
+	margin:5px auto 30px;
+}
+#admin_list_table th{
+	background-color:#00800069;
+}
+.list_table th, .list_table td{
+	padding:5px;
+}
+.list_table th{
+	background-color:#ffa50069;
+	border:1px solid gray;
+}
+.list_table td{
+	border:1px solid #8080804a;
+}
+.list_table tr:nth-child(odd) td{
+	background-color:#c2cbe136;
+}
+.list_table tr:hover{
+	background-color:#dfdfdf;
+	transition    : 0.15s;
+}
+
+
+/* login.jspで用いるCSS */
+#login_form, #admin_login_form{
+	background-color:#f9dc3157;
+	width:30%;
+	margin:auto;
+	padding:20px 30px 20px;
+	border-radius:8px;
+	font-size:large;
+}
+#admin_login_form{
+	background-color:#04910433;
+}
+.login_button, .register_button{
+	background-color:#ffa50069;
+	border:2px solid orange;
+	border-radius:8px;
+	width:140px;
+	height:40px;
+	margin:10 auto 10;
+	font-size:1rem;
+}
+.login_button:hover, .register_button:hover{
+	cursor: pointer;
+	background-color:#e5c064;
+	transition:0.5s;
+}
+.login_button:active, .register_button:active{
+	border: 2px inset #ff6800;
+	transition:0s;
+}
+.register_button{
+	background-color:#ff000047;
+	border:2px solid #ff0000a3;
+}
+.register_button:hover{
+	background-color:#ff00006e;
+}
+.register_button:active{
+	border:2px inset red;
+}
+
+
+/* register.jspで用いるCSS */
+.message_th{
+	width:40%;
+	text-align:left;
+	padding:10 0 10 10;
+	border:2px solid #dc143c;
+	background-color:#ffb6c1;
+}
+.message{
+	width:656px;
+	padding:20px;
+	border:2px solid #dc143c;
+	margin:20 auto 30;
+	text-align:left;
+	background-color:#ffb6c1;
+}
+.jusyo_support{
+	text-align:left;
+	display:inline-block;
+	white-space: nowrap;
+	width:40%;
+}
+.submit{
+	padding:10px;
+	margin:20px;
+	border:2px solid orange;
+	border-radius:15px;
+	background-color:#ffff0054;
+}
+.submit:hover{
+	background-color:#bdbd0057;
+}
+.submit:active{
+	border: 2px inset #ff6800;
+}
+.attention{
+	width:656px;
+	padding:20px;
+	border:1px solid #E0E0E0;
+	margin:30 auto 30;
+	font-size:small;
+	text-align:left;
+}
+.send_button, .revise_button{
+	color:black;
+	font-size:large;
+	font-weight: bold;
+	border:2px solid #ffa500;
+	border-radius:500px;
+	background-color:#ffffab;
+	width:300px;
+	height:50px;
+	margin:10 auto 30;
+}
+.revise_button{
+	font-size:medium;
+	background-color:#f2f2f2;
+	border:2px solid #9f9c9c;
+	width:200px;
+	height:35px;
+	margin:10 auto 10;
+}
+.send_button:hover{
+	cursor: pointer;
+	background-color:#ffb70054;
+	transition: all .5s;
+}
+.revise_button:hover{
+	cursor: pointer;
+	background-color:#d7cece;
+	transition: all .5s;
+}
+.send_button:active, .revise_button:active{
+	border: 2px inset #ff6800;
+}
+.revise_button:active{
+	border: 2px inset #4c4c4c;
+}
+
+
+/* registerConfirm.jspで用いるCSS*/
+#invisible_password{
+	/*z-index: -1;*/
+	position:relative;
+	display:inline-block;
+	white-space: nowrap;
+	width:150;
+}
+#visible_password{
+	/*z-index: 0;*/
+	position:absolute;
+	left:0;
+	width:150;
+	visibility: hidden;
+}
+
+/* userUpdate.jspで用いるCSS */
+.revise_button2{
+	background-color:#00000024;
+	border:2px solid #0000008a;
+	border-radius:8px;
+	width:110px;
+	height:35px;
+	margin:10 auto 10;
+	font-size:1rem;
+}
+.revise_button2:hover{
+	cursor: pointer;
+	background-color:#0000003b;
+	transition:0.5s;
+}
+.revise_button2:active{
+	border: 2px inset #000000b8;
+	transition:0s;
+}

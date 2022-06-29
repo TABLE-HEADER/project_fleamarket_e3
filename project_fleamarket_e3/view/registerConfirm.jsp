@@ -107,7 +107,7 @@ if(registerUser != null){
 					<th>パスワード</th>
 					<td>
 						<span id="invisible_password">●●●●
-							<span id="visible_password"><%= password %></span>
+							<span id="visible_password" style="background-color:white;"><%= password %></span>
 						</span>
 						<span id="buttonEye" class="fa fa-eye" onclick="pushHideButton()"></span>
 					</td>

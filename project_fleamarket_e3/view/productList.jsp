@@ -56,7 +56,7 @@ if(request.getParameter("category") != null){
 				content: '∧';
 			}
 			.detailCheckbox:checked + table .searchInDetail{
-				height: <%=request.getSession().getAttribute("user") != null ? "190" : "150"%>px;
+				height: <%=request.getSession().getAttribute("user") != null && !((User)request.getSession().getAttribute("user")).getAuthority() ? "190" : "150"%>px;
 				opacity: 1;
 				visibility: visible;
 			}
@@ -141,7 +141,7 @@ if(request.getParameter("category") != null){
 									%>
 								</select></p>
 								<p><input id="in_stock" type="checkbox" name="in_stock" form="search">&nbsp;在庫あり商品のみ表示</p>
-								<%if(user != null) {%>
+								<%if(user != null && !user.getAuthority()) {%>
 									<p><input id="self_item" type="checkbox" name="self_item" form="search">&nbsp;自身の出品を非表示</p>
 								<%} %>
 						</div>

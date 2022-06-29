@@ -108,7 +108,7 @@ int stock = Products.getStock() ;
 			<%@include file="/common/footer.jsp" %>
 			<script>
 				$("#quantity").change(function(){
-					$("#total").text(($("#quantity").val() * <%=deal.getPrice()%>) + "円");
+					$("#total").text(($("#quantity").val() * <%=deal.getPrice()%>).toLocaleString() + "円");
 				});
 			</script>
 	</body>

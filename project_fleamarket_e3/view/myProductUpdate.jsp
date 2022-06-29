@@ -115,13 +115,14 @@
 					<tr>
 						<th>商品画像</th>
 						<td valign="top">
+							&nbsp;
+						</td>
+						<td valign="top">
 							<%byte[] image = oldProduct.getImage(); %>
 							<img id='thumbnail' <%= image != null ? "src='data:image/png;base64," + ImageConvert.writeImage(ImageConvert.byteToImage(image), request, response) + "' width='64' height='64' align=top" : "" %> alt='イメージ'>
-						</td>
-						<td>
 							<input type="file" id="uploadImg" accept=".png, .jpg, .jpeg, .bmp"><br>
 							<font color="grey" size="2">画像は64*64に縮小表示されます。</font>
-							<input type="hidden" id="image" name="image" value="image">
+							<input type="hidden" id="image" name="image" value="">
 						</td>
 					</tr>
 					<tr>

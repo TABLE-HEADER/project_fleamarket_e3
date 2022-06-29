@@ -58,46 +58,48 @@ int userid = 0;
 			<% }else{ %>
 				<table align="center" class="list_table" id="admin_list_table">
 			<% } %>
-				<tr>
-					<th>商品名</th>
-					<td><%=Products.getProductname() %></td>
-				</tr>
-				<tr>
-					<th>商品画像</th>
-					<td><%=Products.getImage() != null ? "<img src='data:image/png;base64," + ImageConvert.writeImage(ImageConvert.byteToImage(Products.getImage()), request, response) + "' width='256' height='auto'>" : "-" %></td>
-				</tr>
-				<tr>
-					<th>出品ユーザー</th>
-					<td><%=Products.getNickname() %></td>
-				</tr>
-				<tr>
-					<th>価格</th>
-					<td><%= MyFormat.moneyFormat(Products.getPrice()) %>円</td>
-				</tr>
-				<tr>
-					<th>在庫</th>
-					<td><%=Products.getStock() %>個</td>
-				</tr>
-				<tr>
-					<th>備考</th>
-					<td><%=Products.getRemark() %></td>
-				</tr>
-				<tr>
-					<th>カテゴリ</th>
-					<td><%=Products.getCategory() %></td>
-				</tr>
-				</table>
+					<tr>
+						<th>商品名</th>
+						<td><%=Products.getProductname() %></td>
+					</tr>
+					<tr>
+						<th>商品画像</th>
+						<td><%=Products.getImage() != null ? "<img src='data:image/png;base64," + ImageConvert.writeImage(ImageConvert.byteToImage(Products.getImage()), request, response) + "' width='256' height='auto'>" : "-" %></td>
+					</tr>
+					<tr>
+						<th>出品ユーザー</th>
+						<td><%=Products.getNickname() %></td>
+					</tr>
+					<tr>
+						<th>価格</th>
+						<td><%= MyFormat.moneyFormat(Products.getPrice()) %>円</td>
+					</tr>
+					<tr>
+						<th>在庫</th>
+						<td><%=Products.getStock() %>個</td>
+					</tr>
+					<tr>
+						<th>備考</th>
+						<td><%=Products.getRemark() %></td>
+					</tr>
+					<tr>
+						<th>カテゴリ</th>
+						<td><%=Products.getCategory() %></td>
+					</tr>
+					</table>
+
+			<%if(!UserAuthority && Products.getStock() > 0 && Products.getSellerid() != userid){%>
 				<form action="<%=request.getContextPath()%>/buyConfirm" method="GET">
-
-
-				<%if(!UserAuthority && Products.getStock() > 0 && Products.getSellerid() != userid){%>
 					<p align="center">
 						<input type="hidden"  name="p_id" value="<%=productid%>">
 						<input type="submit"  value="購入画面へ" class="login_button">
 					</p>
-					</form>
-				<% } %>
+				</form>
+			<% } %>
 
+			<form action="<%=request.getContextPath()%>/productList" method="get">
+				<input type="submit" value="商品一覧へ戻る" class="revise_button2" style="width:150px;">
+			</form>
 
 		<!-- footer -->
 			<%@include file="/common/footer.jsp" %>

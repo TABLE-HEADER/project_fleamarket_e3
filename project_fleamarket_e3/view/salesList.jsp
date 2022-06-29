@@ -65,7 +65,7 @@ int total = 0;
 				<h2 style="margin:15px auto;">売上一覧</h2>
 			</div>
 
-			<div style="width:860px; margin:auto;">
+			<div style="width:980px; margin:auto;">
 
 			<table>
 				<tr>
@@ -144,6 +144,7 @@ int total = 0;
 				<tr>
 					<th width="150">購入日</th>
 					<th width="200">商品名</th>
+					<th width="200">商品カテゴリ</th>
 					<th width="150">購入者</th>
 					<th width="100">単価</th>
 					<th width="50">個数</th>
@@ -157,6 +158,7 @@ int total = 0;
 								<tr>
 									<td><%= MyFormat.birthdayFormat(deal.getBought_at()) %></td>
 									<td><%= deal.getProductname() %></td>
+									<td><%= deal.getCategory() %></td>
 									<td><%= deal.getNickname() %></td>
 									<td><%= MyFormat.moneyFormat(deal.getPrice()) %>円</td>
 									<td><%= deal.getQuantity() %>個</td>

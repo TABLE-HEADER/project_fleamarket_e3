@@ -65,7 +65,9 @@ ArrayList<String> error = (ArrayList<String>) request.getAttribute("error");
 			<%@include file="../common/header.jsp" %>
 
 		<!-- contents -->
-			<h1 align="center">ユーザー情報更新</h1>
+			<div>
+				<h2 style="margin:15px auto 10px;">ユーザー情報更新</h2>
+			</div>
 
 			<% if(error != null){ %>
 				<div style="text-align:center; border:2px solid red; width:800px; margin:auto;">

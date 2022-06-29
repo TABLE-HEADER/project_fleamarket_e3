@@ -158,7 +158,7 @@ public class BuyCompleteServlet extends HttpServlet {
 
 			SimpleDateFormat format = new SimpleDateFormat( "yyyy/MM/dd HH:mm:ss" );
 			String limitDate = format.format( dateObj );
-			String dispLimitDate = MyFormat.datetimeFormat(limitDate);
+			String dispLimitDate = MyFormat.birthdayFormat(limitDate);
 
 			String text2 = "本日から3日以内に入金をお願いいたします。\n" +
 							"入金期限：" + dispLimitDate + "\n\n";
@@ -210,7 +210,18 @@ public class BuyCompleteServlet extends HttpServlet {
 
 			sendMail2.setText(text4);
 
-			sendMail2.setText(footerText);
+			String footerText2 = "--------------------------------------\n" +
+					"このメールは神田フリマから自動送信しております。\n" +
+					"お心当たりのない方は、恐れ入りますが下記へその旨をご連絡いただけますと幸いです。\n" +
+					"--------------------------------------\n" +
+					"神田フリマ\n" +
+					"東京都千代田区神田紺屋町１１ 岩田ビル 3F\n" +
+					"TEL ：03-5809-8321\n" +
+					"MAIL ：system.project.team39@kanda-it-school-system.com\n" +
+					"URL ：http://localhost:8080/project_fleamarket_e3/view/productList.jsp\n" +
+					"--------------------------------------\n";
+
+			sendMail2.setText(footerText2);
 			sendMail2.sendMail();
 
 		} catch (IllegalStateException e) {

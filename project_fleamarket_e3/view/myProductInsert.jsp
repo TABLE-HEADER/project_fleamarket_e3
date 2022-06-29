@@ -28,7 +28,8 @@
 	<body id="wrapper">
 		<!-- header -->
 			<%@include file="/common/header.jsp"%>
-			<h2 align="center">出品登録</h2>
+			<h2 style="margin:15px auto;">出品登録</h2>
+			<br>
 
 		<!-- contents -->
 
@@ -43,10 +44,10 @@
 			}
 			%>
 			<form action="<%=request.getContextPath()%>/myProductInsert" method="post"
-				id="login_form" style="background-color:#5bff0029;">
+				id="login_form" style="background-color:#5bff0029; width:40%;">
 				<table border=0 align="center" summary="出品画面">
 					<tr>
-						<th style="background-color: #99FF66; width: 100">カテゴリ<font
+						<th style="background-color: #99FF66; width: 150px">カテゴリ<font
 							size="1" color="#ff0000">必須</font></th>
 
 						<td>
@@ -70,22 +71,22 @@
 						</td>
 					</tr>
 					<tr>
-						<th style="background-color: #99FF66; width: 100">商品名<font
+						<th style="background-color: #99FF66;">商品名<font
 							size="1" color="#ff0000">必須</font></th>
 						<td><input type="text" name="productname" size="23" value=<%=productname %>></td>
 					</tr>
 					<tr>
-						<th style="background-color: #99FF66; width: 100">個数<font
+						<th style="background-color: #99FF66;">個数<font
 							size="1" color="#ff0000">必須</font></th>
 						<td><input type="text" name="stock" size="23" value=<%=stock %>></td>
 					</tr>
 					<tr>
-						<th style="background-color: #99FF66; width: 100">価格(単価)<font
+						<th style="background-color: #99FF66;">価格(単価)<font
 							size="1" color="#ff0000">必須</font></th>
 						<td><input type="text" name="price" size="21" value=<%=price %>>円</td>
 					</tr>
 					<tr>
-						<th style="background-color: #99FF66; width: 100">商品画像</th>
+						<th style="background-color: #99FF66;">商品画像</th>
 						<td valign="top">
 							<img id="thumbnail" src="" alt="イメージ"><br>
 							<input type="file" id="uploadImg" accept=".png, .jpg, .jpeg, .bmp"><br>
@@ -94,7 +95,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th style="background-color: #99FF66; width: 100">備考</th>
+						<th style="background-color: #99FF66;">備考</th>
 						<td><textarea name="remark" rows="5" cols="25"><%=remark %></textarea></td>
 					</tr>
 

@@ -8,6 +8,13 @@
 
 <%
 	ArrayList<String> error = (ArrayList<String>) request.getAttribute("error");
+
+	String category = request.getParameter("category") != null ? request.getParameter("category") : "";
+	String productname = request.getParameter("productname") != null ? request.getParameter("productname") : "";
+	String stock = request.getParameter("stock") != null ? request.getParameter("stock") : "";
+	String price = request.getParameter("price") != null ? request.getParameter("price") : "";
+	String image = request.getParameter("image") != null ? request.getParameter("image") : "";
+	String remark = request.getParameter("remark") != null ? request.getParameter("remark") : "";
 %>
 
 <head>
@@ -35,44 +42,47 @@
 				}
 			}
 			%>
-			<form action="<%=request.getContextPath()%>/myProductInsert" method="post">
+			<form action="<%=request.getContextPath()%>/myProductInsert" method="post"
+				id="login_form" style="background-color:#5bff0029;">
 				<table border=0 align="center" summary="出品画面">
 					<tr>
 						<th style="background-color: #99FF66; width: 100">カテゴリ<font
 							size="1" color="#ff0000">必須</font></th>
 
 						<td>
+							<%
+							// カテゴリの配列データ
+							String[] category_list = {"レディース", "メンズ", "ベビー・キッズ",
+							"インテリア・住まい・小物", "本・音楽・ゲーム", "おもちゃ・ホビー・グッズ",
+							"コスメ・香水・美容", "家電・スマホ・カメラ", "スポーツ・レジャー",
+							"ハンドメイド", "チケット", "自動車・オートバイ", "その他"};
+							%>
 							<select name="category">
-								<option value="レディース">レディース</option>
-								<option value="メンズ">メンズ</option>
-								<option value="ベビー・キッズ">ベビー・キッズ</option>
-								<option value="インテリア・住まい・小物">インテリア・住まい・小物</option>
-								<option value="本・音楽・ゲーム">本・音楽・ゲーム</option>
-								<option value="おもちゃ・ホビー・グッズ">おもちゃ・ホビー・グッズ</option>
-								<option value="コスメ・香水・美容">コスメ・香水・美容</option>
-								<option value="家電・スマホ・カメラ">家電・スマホ・カメラ</option>
-								<option value="スポーツ・レジャー">スポーツ・レジャー</option>
-								<option value="ハンドメイド">ハンドメイド</option>
-								<option value="チケット">チケット</option>
-								<option value="自動車・オートバイ">自動車・オートバイ</option>
-								<option value="その他">その他</option>
+								<option value="" selected>カテゴリを選択</option>
+								<%
+								for(String c : category_list){
+								%>
+									<option value="<%=c %>" <%= category.equals(c)  ? "selected" : ""%>><%=c %></option>
+								<%
+								}
+								%>
 							</select>
 						</td>
 					</tr>
 					<tr>
 						<th style="background-color: #99FF66; width: 100">商品名<font
 							size="1" color="#ff0000">必須</font></th>
-						<td><input type="text" name="productname" size="23"></td>
+						<td><input type="text" name="productname" size="23" value=<%=productname %>></td>
 					</tr>
 					<tr>
 						<th style="background-color: #99FF66; width: 100">個数<font
 							size="1" color="#ff0000">必須</font></th>
-						<td><input type="text" name="stock" size="23"></td>
+						<td><input type="text" name="stock" size="23" value=<%=stock %>></td>
 					</tr>
 					<tr>
 						<th style="background-color: #99FF66; width: 100">価格(単価)<font
 							size="1" color="#ff0000">必須</font></th>
-						<td><input type="text" name="price" size="21">円</td>
+						<td><input type="text" name="price" size="21" value=<%=price %>>円</td>
 					</tr>
 					<tr>
 						<th style="background-color: #99FF66; width: 100">商品画像</th>
@@ -80,12 +90,12 @@
 							<img id="thumbnail" src="" alt="イメージ"><br>
 							<input type="file" id="uploadImg" accept=".png, .jpg, .jpeg, .bmp"><br>
 							<font color="grey" size="2">画像は64*64に縮小表示されます。</font>
-							<input type="hidden" id="image" name="image" value="">
+							<input type="hidden" id="image" name="image" value=<%=image %>>
 						</td>
 					</tr>
 					<tr>
 						<th style="background-color: #99FF66; width: 100">備考</th>
-						<td><textarea name="remark" rows="5" cols="25"></textarea></td>
+						<td><textarea name="remark" rows="5" cols="25"><%=remark %></textarea></td>
 					</tr>
 
 					<tr>

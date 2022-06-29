@@ -90,7 +90,6 @@ if(request.getAttribute("category") != null){
 				</caption>
 				<tr>
 					<th bgcolor="#6666ff" width="50" colspan="2">&nbsp;</th>
-					<th bgcolor="#6666ff" width="50">商品ID</th>
 					<th bgcolor="#6666ff" width="200">商品カテゴリ</th>
 					<th bgcolor="#6666ff" width="200">商品名</th>
 					<th bgcolor="#6666ff" width="50">在庫</th>
@@ -110,10 +109,9 @@ if(request.getAttribute("category") != null){
 							"if(window.confirm('「<%=product.getProductname() %>」を削除してもよろしいですか？')){
 								location.href = '<%=request.getContextPath()%>/myProductList?deleteid=<%=product.getProductid() %>'
 							}">[削除]</a></td>
-							<td align="center"><%=product.getProductid() %></td>
 							<td align="center"><%=product.getCategory() %></td>
 							<td align="center"><%=product.getProductname() %></td>
-							<td align="center"><%=product.getStock() %></td>
+							<td align="center"><%=product.getStock() %>個</td>
 							<td align="center"><%=MyFormat.moneyFormat(product.getPrice()) %>円</td>
 							<td align="center"><%=MyFormat.birthdayFormat(product.getCreated_at()) %></td>
 							<%if(product.getOn_sale()) { %>

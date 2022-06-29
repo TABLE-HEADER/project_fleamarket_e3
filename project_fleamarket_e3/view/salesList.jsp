@@ -35,6 +35,7 @@ int total = 0;
 
 <html>
 	<head>
+		<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/commonStyle.css">
 		<!-- "title"タグ内には画面名をつけてください(ブラウザのタブに表示されます) -->
 		<title>売上一覧</title>
 		<style type="text/css">
@@ -118,13 +119,16 @@ int total = 0;
 							<input type="submit" value="検索"></input>
 						</form>
 					<td>
-							<form action="<%=request.getContextPath()%>/salesList">
-								<input type="submit" value="全件表示"></input>
-							</form>
-						</td>
+						<form action="<%=request.getContextPath()%>/salesList">
+							<input type="submit" value="全件表示"></input>
+						</form>
+					</td>
 				</tr>
 			</table>
-			<table>
+
+			<br>
+
+			<table class="list_table" id="admin_list_table">
 				<caption>
 					<%if(category.equals("") && year.equals("") && month.equals("")) {%>
 						全件表示（<%=deal_list.size() %>件）
@@ -138,7 +142,6 @@ int total = 0;
 					<% }%>
 				</caption>
 				<tr>
-					<th width="100">売上ID</th>
 					<th width="150">購入日</th>
 					<th width="200">商品名</th>
 					<th width="150">購入者</th>
@@ -152,22 +155,11 @@ int total = 0;
 							if(deal.getPaid_at() != null){
 				%>
 								<tr>
-									<td><%= deal.getDealid() %></td>
-									<td>
-										<%
-										 	/*
-										 	String date = MyFormat.datetimeFormat(deal.getBought_at());
-											int cut = date.indexOf("日");
-											String pre = date.substring(0, cut + 1);
-											String post = date.substring(cut + 1);
-											*/
-										%>
-										<%= MyFormat.birthdayFormat(deal.getBought_at()) %>
-									</td>
+									<td><%= MyFormat.birthdayFormat(deal.getBought_at()) %></td>
 									<td><%= deal.getProductname() %></td>
 									<td><%= deal.getNickname() %></td>
 									<td><%= MyFormat.moneyFormat(deal.getPrice()) %>円</td>
-									<td><%= deal.getQuantity() %></td>
+									<td><%= deal.getQuantity() %>個</td>
 									<td><%= MyFormat.moneyFormat(deal.getTotal()) %>円</td>
 									<% total += deal.getTotal(); %>
 								</tr>

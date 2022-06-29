@@ -11,18 +11,9 @@ ArrayList<String> error = (ArrayList<String>) request.getAttribute("error");
 %>
 <html>
 	<head>
-
-			<title>ユーザー情報更新</title>
-
+		<title>ユーザー情報更新</title>
+		<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/commonStyle.css">
 		<style type="text/css">
-			#wrapper {
-				max-width: 970px;
-				margin: 10px auto 0px;
-				text-align: center;
-				font-family: "游ゴシック Medium", "Yu Gothic Medium";
-				font-weight: bold;
-				color: #464646;
-			}
 			table {
 				margin: 10px auto;
 				border: 2px solid black;
@@ -35,50 +26,6 @@ ArrayList<String> error = (ArrayList<String>) request.getAttribute("error");
 			td {
 				text-align: left;
 				width: 75%;
-			}
-			.jusyo_support {
-				text-align: left;
-				display: inline-block;
-				white-space: nowrap;
-				width: 40%;
-			}
-			.submit, .revise {
-				padding: 15px;
-				margin: 20px;
-				border: 2px solid orange;
-				border-radius: 15px;
-				background-color: #ffff0054;
-			}
-			.revise {
-				padding: 7px;
-				background-color: #80808052;
-			}
-			.submit:hover {
-				background-color: #bdbd0057;
-			}
-			.submit:active {
-				border: 2px inset #ff6800;
-			}
-			.revise:hover {
-				background-color: #80808078;
-			}
-			.revise:active {
-				border: 2px inset #ff6800;
-			}
-
-			#invisible_password{
-				z-index: -2;
-				position:relative;
-				display:inline-block;
-				white-space: nowrap;
-				width:150;
-			}
-			#visible_password{
-				z-index: -1;
-				position:absolute;
-				left:0;
-				width:150;
-				visibility: hidden;
 			}
 		</style>
 		<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
@@ -127,8 +74,8 @@ ArrayList<String> error = (ArrayList<String>) request.getAttribute("error");
 					<%} %>
 				</div>
 			<%} %>
-			<p>現在の情報</p>
-			<table>
+			<p style="color:blue;">現在の情報</p>
+			<table class="list_table">
 				<tr>
 					<th>メールアドレス<br><span class="kome">※ログイン時に必要になります</span></th>
 					<td><%= user.getEmail() %></td>
@@ -188,41 +135,45 @@ ArrayList<String> error = (ArrayList<String>) request.getAttribute("error");
 					</td>
 				</tr>
 			</table>
-			<p style="font-size:2rem">▼</p>
+			<p style="font-size:1.6rem">▼</p>
 
 
-			<p>更新情報を入力</p>
+			<p style="color:red;">更新情報を入力</p>
 
 			<script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
 			<form action="<%=request.getContextPath()%>/userUpdate" method="post">
-				<table>
+				<table class="list_table">
 					<tr>
 						<th>メールアドレス<br><span class="kome">※ログイン時に必要になります</span></th>
 						<td>
 							<input type="email" name="email"  value="<%= user.getEmail() %>" id="username"
-							autocomplete="email" required="required">
+							autocomplete="email" required="required" size="25">
 						</td>
 					</tr>
 					<tr>
 						<th>パスワード<br><span class="kome">※ログイン時に必要になります</span></th>
 						<td>
-							<input type="password" name="password" value="<%= user.getPassword() %>" required="required" id="newPassword">
+							<input type="password" name="password" value="<%= user.getPassword() %>"
+								 required="required" id="newPassword" size="25">
 							<span id="buttonEye2" class="fa fa-eye" onclick="pushHideButton2('buttonEye2', 'newPassword')"></span>
 						</td>
 					</tr>
 					<tr>
 						<th>ニックネーム<br><span class="kome">※他ユーザーに公開されます</span></th>
-						<td><input type="text" name="nickname" value="<%= user.getNickname() %>" required="required"></td>
+						<td><input type="text" name="nickname" value="<%= user.getNickname() %>"
+								required="required" size="25"></td>
 					</tr>
 					<tr>
 						<th>お名前</th>
-						<td><input type="text" name="username" value="<%= user.getUsername() %>" required="required"></td>
+						<td><input type="text" name="username" value="<%= user.getUsername() %>"
+							 required="required" size="25"></td>
 					</tr>
 					<tr>
 						<th rowspan="5">住所</th>
 						<td>
 							<span class="jusyo_support">郵便番号</span>
-							<input type="text" name="postal-code" value="<%= user.getPostal_code() %>"required="required"
+							<input type="text" name="postal-code" value="<%= user.getPostal_code() %>"
+							 required="required"
 							maxlength="8" autocomplete="postal-code" class="p-postal-code">
 						</td>
 					</tr>
@@ -264,9 +215,11 @@ ArrayList<String> error = (ArrayList<String>) request.getAttribute("error");
 					</tr>
 				</table>
 
-				<input type="submit" value="更新">
-				<input type="reset" value="リセット">
+				<input type="reset" value="リセット" class="revise_button2">
+				<br>
+				<input type="submit" value="更新" class="login_button">
 			</form>
+			<br>
 
 		<!-- footer -->
 			<%@include file="../common/footer.jsp" %>

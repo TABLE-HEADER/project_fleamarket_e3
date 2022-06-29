@@ -9,6 +9,7 @@ String productid = request.getParameter("productid");
 //Productオブジェクトの生成
 Product product = new Product();
 boolean UserAuthority = false;
+int userid = 0;
 %>
 
 <html>
@@ -36,21 +37,27 @@ boolean UserAuthority = false;
 	<body id="wrapper">
 		<!-- header -->
 			<%@include file="/common/public_header.jsp" %>
-			<% UserAuthority = user != null ? user.getAuthority() : true; %>
+			<%
+				UserAuthority = user != null ? user.getAuthority() : true;
+				userid = user != null ? user.getUserid() : 0;
+			%>
 
 		<!-- contents -->
 			<div>
 				<h2 style="margin:15px auto 10px;">商品詳細</h2>
 			</div>
 
-			<!-- 選択した商品の詳細は以下の通りです。<br> -->
 			<br>
-			<%if(!UserAuthority && Products.getStock() > 0){%>
+			選択した商品の詳細は以下の通りです。<br>
+			<%if(!UserAuthority && Products.getStock() > 0 && Products.getSellerid() != userid){%>
 			購入する場合は「購入画面へ」をクリック！<br>
 			<% } %>
 
-			<table align="center" class="list_table">
-
+			<% if(!authority.equals("管理者")){  %>
+				<table align="center" class="list_table">
+			<% }else{ %>
+				<table align="center" class="list_table" id="admin_list_table">
+			<% } %>
 				<tr>
 					<th>商品名</th>
 					<td><%=Products.getProductname() %></td>
@@ -83,7 +90,7 @@ boolean UserAuthority = false;
 				<form action="<%=request.getContextPath()%>/buyConfirm" method="GET">
 
 
-				<%if(!UserAuthority && Products.getStock() > 0){%>
+				<%if(!UserAuthority && Products.getStock() > 0 && Products.getSellerid() != userid){%>
 					<p align="center">
 						<input type="hidden"  name="p_id" value="<%=productid%>">
 						<input type="submit"  value="購入画面へ" class="login_button">

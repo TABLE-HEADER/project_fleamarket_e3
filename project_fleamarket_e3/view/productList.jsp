@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" %>
-<%@page import="java.util.ArrayList,bean.Product, util.ImageConvert" %> <!-- importの必要性が生じた場合この中に記述してください -->
+<%@page import="java.util.ArrayList,bean.Product, util.ImageConvert, util.MyFormat" %> <!-- importの必要性が生じた場合この中に記述してください -->
 
 <!-- あらかじめ作動させる必要があるプログラムは以下に記述 -->
 <%
@@ -34,6 +34,9 @@ if(request.getParameter("category") != null){
 				display: block;
 				position: relative;
 			}
+			.detailOpen:hover{
+				cursor: pointer;
+			}
 			.detailOpen:after{
 				content: '∨';
 				display: block;
@@ -53,7 +56,7 @@ if(request.getParameter("category") != null){
 				content: '∧';
 			}
 			.detailCheckbox:checked + table .searchInDetail{
-				height: 150px;
+				height: <%=request.getSession().getAttribute("user") != null ? "190" : "150"%>px;
 				opacity: 1;
 				visibility: visible;
 			}
@@ -138,20 +141,23 @@ if(request.getParameter("category") != null){
 									%>
 								</select></p>
 								<p><input id="in_stock" type="checkbox" name="in_stock" form="search">&nbsp;在庫あり商品のみ表示</p>
+								<%if(user != null) {%>
+									<p><input id="self_item" type="checkbox" name="self_item" form="search">&nbsp;自身の出品を非表示</p>
+								<%} %>
 						</div>
 					</td>
 				</tr>
 			</table>
 
 			<br>
-			
+
 			<% if(!authority.equals("管理者")){  %>
 				<table align="center" class="list_table">
 			<% }else{ %>
 				<table align="center" class="list_table" id="admin_list_table">
 			<% } %>
 				<caption>
-					<%if(request.getParameter("minprice") != null || request.getParameter("region") != null || request.getParameter("in_stock") != null) {%>
+					<%if(request.getParameter("minprice") != null || request.getParameter("region") != null || request.getParameter("in_stock") != null || request.getParameter("self_item") != null) {%>
 						詳細検索（<%=product_list != null ? product_list.size() : 0%>件）
 					<%}
 					else if(productname.equals("") && category.equals("")) {%>
@@ -165,13 +171,13 @@ if(request.getParameter("category") != null){
 					<% }%>
 				</caption>
 				<tr>
-					<th bgcolor="#6666ff" width="100">商品ID</th>
 					<th bgcolor="#6666ff" width="64">画像</th>
 					<th bgcolor="#6666ff" width="200">商品カテゴリ</th>
 					<th bgcolor="#6666ff" width="200">商品名</th>
 					<th bgcolor="#6666ff" width="50">在庫</th>
-					<th bgcolor="#6666ff" width="100">単価</th>
-					<th bgcolor="#6666ff" width="100">登録日</th>
+					<th bgcolor="#6666ff" width="80">単価</th>
+					<th bgcolor="#6666ff" width="80">出品地域</th>
+					<th bgcolor="#6666ff" width="120">登録日</th>
 				</tr>
 
 				<%
@@ -180,13 +186,13 @@ if(request.getParameter("category") != null){
 						Product product = product_list.get(i);
 						%>
 						<tr <%=product.getStock() > 0  ? "" : "bgcolor='silver'" %>>
-							<td align="center" width="100"><%=product.getProductid() %></td>
-							<td align="center" width="64"><%=product.getImage() != null ? "<img src='data:image/png;base64," + ImageConvert.writeImage(ImageConvert.byteToImage(product.getImage()), request, response) + "' width='64' height='auto'>" : "-" %></td>
-							<td align="center" width="200"><%=product.getCategory() %></td>
-							<td align="center" width="200"><a href="<%=request.getContextPath() %>/productDetail?productid=<%=product.getProductid() %>"><%=product.getProductname() %></a></td>
-							<td align="center" width="50"><%=product.getStock() %></td>
-							<td align="center" width="100"><%=MyFormat.moneyFormat(product.getPrice()) %>円</td>
-							<td align="center" width="100"><%=product.getCreated_at() %></td>
+							<td align="center"><%=product.getImage() != null ? "<img src='data:image/png;base64," + ImageConvert.writeImage(ImageConvert.byteToImage(product.getImage()), request, response) + "' width='64' height='auto'>" : "-" %></td>
+							<td align="center"><%=product.getCategory() %></td>
+							<td align="center"><a href="<%=request.getContextPath() %>/productDetail?productid=<%=product.getProductid() %>"><%=product.getProductname() %></a></td>
+							<td align="center"><%=product.getStock() %>個</td>
+							<td align="center"><%=MyFormat.moneyFormat(product.getPrice()) %>円</td>
+							<td align="center"><%=product.getAddress_level1() %></td>
+							<td align="center"><%=MyFormat.birthdayFormat(product.getCreated_at()) %></td>
 						</tr>
 						<%
 					}

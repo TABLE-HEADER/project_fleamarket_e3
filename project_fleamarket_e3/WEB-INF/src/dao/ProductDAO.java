@@ -536,7 +536,7 @@ public class ProductDAO{
 	}
 
 	// searchInDetail
-	public ArrayList<Product> searchInDetail(String productname, String category, int minprice, int maxprice, String region, boolean in_stock) {
+	public ArrayList<Product> searchInDetail(String productname, String category, int minprice, int maxprice, String region, boolean in_stock, int userid, boolean self_item) {
 
 		//変数宣言
 		Connection con = null;
@@ -558,6 +558,9 @@ public class ProductDAO{
 		}
 		if(in_stock) {
 			sql += "AND stock > 0 ";
+		}
+		if(self_item) {
+			sql += "AND sellerid <> " + userid + " ";
 		}
 
 		sql += "AND on_sale = TRUE "

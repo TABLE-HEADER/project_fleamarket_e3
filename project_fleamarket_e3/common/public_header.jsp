@@ -27,7 +27,7 @@ if(user != null){
 	</head>
 	<body id="wrapper">
 		<!-- header -->
-			<header style="position:sticky; top:0px; background-color:white; padding:5px 0px 0px;">
+			<header style="position:sticky; top:0px; background-color:white; padding:5px 0px 0px; z-index:1;">
 				<% if(authority.equals("")){ %>
 					<div id="logo" style="float:left; padding:5px;">
 						<a href="<%= request.getContextPath() %>/productList">

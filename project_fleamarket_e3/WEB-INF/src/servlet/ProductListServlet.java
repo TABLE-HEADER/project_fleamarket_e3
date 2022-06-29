@@ -6,6 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import bean.Product;
+import bean.User;
 import dao.ProductDAO;
 
 public class ProductListServlet extends HttpServlet{
@@ -29,7 +30,9 @@ public class ProductListServlet extends HttpServlet{
 			int minprice = 0;
 			int maxprice = 0;
 			String region = "";
-			Boolean in_stock = request.getParameter("in_stock") != null;
+			boolean in_stock = request.getParameter("in_stock") != null;
+			int userid = 0;
+			boolean self_item = request.getParameter("self_item") != null;
 
 			// search
 			if(request.getParameter("productname") != null){
@@ -47,8 +50,15 @@ public class ProductListServlet extends HttpServlet{
 			if(request.getParameter("region") != null){
 				region = (String)request.getParameter("region");
 			}
+			if(request.getParameter("self_item") != null){
+				// セッションオブジェクト生成
+				HttpSession session = request.getSession();
+				// ユーザーオブジェクトを取得
+				User user = (User) session.getAttribute("user");
+				userid = user.getUserid();
+			}
 
-			if(minprice == 0 && maxprice == 0 && region == "" && !in_stock) {
+			if(minprice == 0 && maxprice == 0 && region == "" && !in_stock && !self_item) {
 
 				if(productname.equals("") && category.equals("")) {
 
@@ -73,7 +83,7 @@ public class ProductListServlet extends HttpServlet{
 				}
 
 				// 詳細検索
-				list = objProductDao.searchInDetail(productname, category, minprice, maxprice, region, in_stock);
+				list = objProductDao.searchInDetail(productname, category, minprice, maxprice, region, in_stock, userid, self_item);
 
 			}
 

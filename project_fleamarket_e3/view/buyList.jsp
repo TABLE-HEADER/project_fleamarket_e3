@@ -90,7 +90,6 @@ if(request.getParameter("category") != null){
 					<% }%>
 				</caption>
 				<tr>
-					<th bgcolor="#6666ff" width="50">商品ID</th>
 					<th bgcolor="#6666ff" width="180">商品カテゴリ</th>
 					<th bgcolor="#6666ff" width="180">商品名</th>
 					<th bgcolor="#6666ff" width="50">個数</th>
@@ -107,10 +106,9 @@ if(request.getParameter("category") != null){
 						Deal deal = deal_list.get(i);
 						%>
 						<tr>
-							<td align="center"><%=deal.getProductid() %></td>
 							<td align="center"><%=deal.getCategory() %></td>
 							<td align="center"><%=deal.getProductname() %></td>
-							<td align="center"><%=deal.getQuantity() %></td>
+							<td align="center"><%=deal.getQuantity() %>個</td>
 							<td align="center"><%=MyFormat.moneyFormat(deal.getTotal()) %>円</td>
 							<td align="center"><%=deal.getPaid_at() != null ? MyFormat.birthdayFormat(deal.getPaid_at()) : "&nbsp;"%></td>
 							<td align="center"><%=deal.getSent_at() != null ? MyFormat.birthdayFormat(deal.getSent_at()) : "&nbsp;"%></td>

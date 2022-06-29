@@ -1,5 +1,7 @@
 package util;
 
+import java.text.DecimalFormat;
+
 /*
  * プログラム名：MyFormat
  * プログラムの説明：画面表示のため、各種変数を変換します。
@@ -69,5 +71,29 @@ public class MyFormat {
 
 		// 戻り値
 		return dispBirthday;
+	}
+
+	/**
+	 * 引数のpriceを、3桁区切りのString型に変換する
+	 * @param int price
+	 * @return String price
+	 */
+	public static String moneyFormat(int price) {
+
+		DecimalFormat df1 = new DecimalFormat(",###");
+		return df1.format(price);
+
+	}
+
+	/**
+	 * 引数のpriceを、3桁区切り、小数点「.xx」付きのString型に変換する
+	 * @param int price
+	 * @return String price
+	 */
+	public static String moneyFormat(double price) {
+
+		DecimalFormat df1 = new DecimalFormat(",###.00");
+		return df1.format(price);
+
 	}
 }

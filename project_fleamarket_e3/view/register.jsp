@@ -57,6 +57,7 @@ if(messageList != null && !messageList.isEmpty()){
 <html>
 	<head>
 		<title>会員登録</title>
+		<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/commonStyle.css">
 		<style type="text/css">
 			/*
 			CSSを書く際はこの中に記述してください
@@ -79,94 +80,17 @@ if(messageList != null && !messageList.isEmpty()){
 				border:1px solid gray;
 				background-color:#8080801a;
 			}
-			.message_th{
-				width:40%;
-				text-align:left;
-				padding:10 0 10 10;
-				border:2px solid #dc143c;
-				background-color:#ffb6c1;
-			}
 			td{
 				text-align:left;
 				width:75%;
 			}
-			.jusyo_support{
-				text-align:left;
-				display:inline-block;
-				white-space: nowrap;
-				width:40%;
-			}
-			input{
-				padding:5px;
-			}
-			.submit{
-				padding:10px;
-				margin:20px;
-				border:2px solid orange;
-				border-radius:15px;
-				background-color:#ffff0054;
-			}
-			.submit:hover{
-				background-color:#bdbd0057;
-			}
-			.submit:active{
-				border: 2px inset #ff6800;
-			}
-			.attention{
-				width:656px;
-				padding:20px;
-				border:1px solid #E0E0E0;
-				margin:30 auto 30;
-				font-size:small;
-				text-align:left;
-			}
-
-			.send_button, .revise_button{
-				color:black;
-				font-size:large;
-				font-weight: bold;
-				border:2px solid #ffa500;
-				border-radius:500px;
-				background-color:#ffffab;
-				width:300px;
-				height:50px;
-				margin:10 auto 30;
-			}
-			.revise_button{
-				font-size:medium;
-				background-color:#f2f2f2;
-				border:2px solid #9f9c9c;
-				width:200px;
-				height:30px;
-				margin:10 auto 10;
-			}
-			.send_button:hover{
-				cursor: pointer;
-				background-color:#ffb70054;
-				transition: all .5s;
-			}
-			.send_button:active{
-				border: 2px inset #ff6800;
-			}
-			.revise_button:hover{
-				cursor: pointer;
-				background-color:#d7cece;
-				transition: all .5s;
-			}
-
-			.message{
-				width:656px;
-				padding:20px;
-				border:2px solid #dc143c;
-				margin:20 auto 30;
-				text-align:left;
-				background-color:#ffb6c1;
-			}
 		</style>
+		<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+
 	</head>
 	<body id="wrapper">
 		<!-- header -->
-			<%@include file="/common/header.jsp" %>
+			<%@include file="/common/public_header.jsp" %>
 
 		<!-- contents -->
 			<div>
@@ -195,7 +119,7 @@ if(messageList != null && !messageList.isEmpty()){
 						<td>
 							<input type="email" name="email"  value="<%= email %>" size="25"
 							pattern=".+\.[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]"
-							placeholder="knada_english@kanda.com" autocomplete="email" required="required">
+							placeholder="example@kanda.com" autocomplete="email" required="required">
 						</td>
 					</tr>
 					<tr>
@@ -203,7 +127,8 @@ if(messageList != null && !messageList.isEmpty()){
 							<br><span class="kome">※ログイン時に必要になります</span></th>
 						<td>
 							<input type="password" name="password"   size="25"
-							autocomplete="new-password" required="required">
+							autocomplete="new-password" required="required" id="input_password">
+							<span id="buttonEye" class="fa fa-eye" onclick="pushHideButton()"></span>
 						</td>
 					</tr>
 					<tr>
@@ -215,6 +140,21 @@ if(messageList != null && !messageList.isEmpty()){
 						</td>
 					</tr>
 				</table>
+
+				<script  type="text/javascript">
+					function pushHideButton(){
+						var txtPass = document.getElementById("input_password");
+						var btnEye = document.getElementById("buttonEye");
+
+						if (txtPass.type === "text") {
+							txtPass.type = "password";
+							btnEye.className = "fa fa-eye";
+						} else {
+							txtPass.type = "text";
+							btnEye.className = "fa fa-eye-slash";
+						}
+					}
+				</script>
 
 
 				<table>
@@ -251,14 +191,14 @@ if(messageList != null && !messageList.isEmpty()){
 						<td>
 							<span class="jusyo_support">市区町村</span>
 							<input type="text" name="address_level2" value="<%= address_level2 %>"
-							placeholder="千代田区神田紺屋町" autocomplete="address-level2" class="p-locality" required="required">
+							placeholder="千代田区" autocomplete="address-level2" class="p-locality" required="required">
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<span class="jusyo_support">番地等</span>
+							<span class="jusyo_support">町名・番地</span>
 							<input type="text" name="address_line1" value="<%= address_line1 %>"
-							placeholder="11番地" autocomplete="address-line1" class="p-street-address" required="required">
+							placeholder="神田紺屋町11番地" autocomplete="address-line1" class="p-street-address" required="required">
 						</td>
 					</tr>
 					<tr>

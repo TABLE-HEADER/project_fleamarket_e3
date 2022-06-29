@@ -40,7 +40,8 @@ if(registerUser != null){
 
 <html>
 	<head>
-		<title>会員登録</title>
+		<title>会員登録確認</title>
+		<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/commonStyle.css">
 		<style type="text/css">
 			/*
 			CSSを書く際はこの中に記述してください
@@ -67,86 +68,6 @@ if(registerUser != null){
 				text-align:left;
 				width:75%;
 			}
-			.jusyo_support{
-				text-align:left;
-				display:inline-block;
-				white-space: nowrap;
-				width:40%;
-			}
-			input{
-				padding:5px;
-			}
-			.submit{
-				padding:10px;
-				margin:20px;
-				border:2px solid orange;
-				border-radius:15px;
-				background-color:#ffff0054;
-			}
-			.submit:hover{
-				background-color:#bdbd0057;
-			}
-			.submit:active{
-				border: 2px inset #ff6800;
-			}
-			.attention{
-				width:656px;
-				padding:20px;
-				border:1px solid #E0E0E0;
-				margin:30 auto 30;
-				font-size:small;
-				text-align:left;
-			}
-
-			.send_button, .revise_button{
-				color:black;
-				font-size:large;
-				font-weight: bold;
-				border:2px solid #ffa500;
-				border-radius:500px;
-				background-color:#ffffab;
-				width:300px;
-				height:50px;
-				margin:10 auto 30;
-			}
-			.revise_button{
-				font-size:medium;
-				background-color:#f2f2f2;
-				border:2px solid #9f9c9c;
-				width:200px;
-				height:35px;
-				margin:10 auto 10;
-			}
-			.send_button:hover{
-				cursor: pointer;
-				background-color:#ffb70054;
-				transition: all .5s;
-			}
-			.revise_button:hover{
-				cursor: pointer;
-				background-color:#d7cece;
-				transition: all .5s;
-			}
-			.send_button:active, .revise_button:active{
-				border: 2px inset #ff6800;
-			}
-			.revise_button:active{
-				border: 2px inset #4c4c4c;
-			}
-
-			#invisible_password{
-				position:relative;
-				display:inline-block;
-				white-space: nowrap;
-				width:150;
-			}
-			#visible_password{
-				position:absolute;
-				left:0;
-				width:150;
-				background:white;
-				visibility: hidden;
-			}
 		</style>
 		<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 		<script type="text/javascript">
@@ -166,11 +87,11 @@ if(registerUser != null){
 	</head>
 	<body id="wrapper">
 		<!-- header -->
-			<%@include file="/common/header.jsp" %>
+			<%@include file="/common/public_header.jsp" %>
 
 		<!-- contents -->
 			<div>
-				<h2 style="margin:15px auto 10px;">会員登録</h2>
+				<h2 style="margin:15px auto 10px;">会員登録確認</h2>
 			</div>
 
 			<script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
@@ -186,7 +107,7 @@ if(registerUser != null){
 					<th>パスワード</th>
 					<td>
 						<span id="invisible_password">●●●●
-							<span id="visible_password"><%= password %></span>
+							<span id="visible_password" style="background-color:white;"><%= password %></span>
 						</span>
 						<span id="buttonEye" class="fa fa-eye" onclick="pushHideButton()"></span>
 					</td>
@@ -234,7 +155,7 @@ if(registerUser != null){
 				</tr>
 				<tr>
 					<td>
-						<span class="jusyo_support">番地等</span>
+						<span class="jusyo_support">町名・番地等</span>
 						<%= address_line1 %>
 					</td>
 				</tr>
@@ -262,7 +183,7 @@ if(registerUser != null){
 			</form>
 
 			<form action="<%= request.getContextPath() %>/register" method="post">
-				<input type="submit" value="送信する" class="send_button">
+				<input type="submit" value="登録する" class="send_button">
 			</form>
 
 		<!-- footer -->

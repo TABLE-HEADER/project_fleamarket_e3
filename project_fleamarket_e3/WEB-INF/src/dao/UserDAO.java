@@ -56,7 +56,8 @@ public class UserDAO{
 				user.setCredit_number(rs.getString("credit_number"));
 				user.setDeal_count(rs.getInt("deal_count"));
 				user.setAuthority(rs.getBoolean("authority"));
-				user.setCreated_at(rs.getString("created_at"));
+				String created_at = rs.getString("created_at");
+				user.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
 
 			}
 
@@ -74,8 +75,9 @@ public class UserDAO{
 		return user;
 	}
 
-	// DBのuserinfoテーブルから指定ユーザーとパスワードの条件に合致する情報を取得するメソッド定義
-	public User selectByUser(int userid , String password) {
+
+	// DBのuserinfoテーブルから指定のemailを持つUserを返す
+	public User selectByEmail(String email) {
 
 		//変数宣言
 		Connection con = null;
@@ -83,7 +85,7 @@ public class UserDAO{
 		User user = new User();
 
 		//SQL文
-		String sql = "SELECT * FROM userinfo WHERE user = '" + userid + "' AND password = '" + password + "'";
+		String sql = "SELECT * FROM userinfo WHERE email = '" + email + "'";
 
 		try{
 			con = getConnection();
@@ -107,7 +109,61 @@ public class UserDAO{
 				user.setCredit_number(rs.getString("credit_number"));
 				user.setDeal_count(rs.getInt("deal_count"));
 				user.setAuthority(rs.getBoolean("authority"));
-				user.setCreated_at(rs.getString("created_at"));
+				String created_at = rs.getString("created_at");
+				user.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
+
+			}
+
+		}catch(Exception e){
+			throw new IllegalStateException(e);
+		}finally{
+			//リソースの開放
+			if(smt != null){
+				try{smt.close();}catch(SQLException ignore){}
+			}
+			if(con != null){
+				try{con.close();}catch(SQLException ignore){}
+			}
+		}
+		return user;
+	}
+
+
+	// DBのuserinfoテーブルから指定ユーザーとパスワードの条件に合致する情報を取得するメソッド定義
+	public User selectByUser(String email , String password) {
+
+		//変数宣言
+		Connection con = null;
+		Statement  smt = null;
+		User user = new User();
+
+		//SQL文
+		String sql = "SELECT * FROM userinfo WHERE email = '" + email + "' AND password = '" + password + "'";
+
+		try{
+			con = getConnection();
+			smt = con.createStatement();
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			//取得した結果をUserオブジェクトに格納
+			if(rs.next()){
+				user.setUserid(rs.getInt("userid"));
+				user.setPassword(rs.getString("password"));
+				user.setUsername(rs.getString("username"));
+				user.setNickname(rs.getString("nickname"));
+				user.setBirthday(rs.getString("birthday"));
+				user.setPostal_code(rs.getString("postal_code"));
+				user.setAddress_level1(rs.getString("address_level1"));
+				user.setAddress_level2(rs.getString("address_level2"));
+				user.setAddress_line1(rs.getString("address_line1"));
+				user.setAddress_line2(rs.getString("address_line2"));
+				user.setEmail(rs.getString("email"));
+				user.setCredit_number(rs.getString("credit_number"));
+				user.setDeal_count(rs.getInt("deal_count"));
+				user.setAuthority(rs.getBoolean("authority"));
+				String created_at = rs.getString("created_at");
+				user.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
 
 			}
 
@@ -135,7 +191,7 @@ public class UserDAO{
 		ArrayList<User> list = new ArrayList<User>();
 
 		//SQL文
-		String sql = "SELECT * FROM userinfo";
+		String sql = "SELECT * FROM userinfo ORDER BY created_at DESC, userid DESC";
 
 		try{
 			con = getConnection();
@@ -160,7 +216,8 @@ public class UserDAO{
 				user.setCredit_number(rs.getString("credit_number"));
 				user.setDeal_count(rs.getInt("deal_count"));
 				user.setAuthority(rs.getBoolean("authority"));
-				user.setCreated_at(rs.getString("created_at"));
+				String created_at = rs.getString("created_at");
+				user.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
 
 				list.add(user);
 			}
@@ -306,8 +363,8 @@ public class UserDAO{
 
 	}
 
-	// search
-	public ArrayList<User> search(String nickname){
+	// searchUsernameAndNickname
+	public ArrayList<User> searchUsernameAndNickname(String username, String nickname){
 
 		//変数宣言
 		Connection con = null;
@@ -316,7 +373,9 @@ public class UserDAO{
 		ArrayList<User> list = new ArrayList<User>();
 
 		//SQL文
-		String sql = "SELECT * FROM userinfo WHERE nickname LIKE '%" + nickname + "%'";
+		String sql = "SELECT * FROM userinfo WHERE username LIKE '%" + username + "%' "
+				+ "AND nickname LIKE '%" + nickname + "%' "
+				+ "ORDER BY created_at DESC, userid DESC";
 
 		try{
 			con = getConnection();
@@ -341,7 +400,8 @@ public class UserDAO{
 				user.setCredit_number(rs.getString("credit_number"));
 				user.setDeal_count(rs.getInt("deal_count"));
 				user.setAuthority(rs.getBoolean("authority"));
-				user.setCreated_at(rs.getString("created_at"));
+				String created_at = rs.getString("created_at");
+				user.setCreated_at(created_at != null ? created_at.split(" ")[0] : null);
 
 				list.add(user);
 			}
@@ -358,57 +418,6 @@ public class UserDAO{
 			}
 		}
 		return list;
-	}
-
-	// DBのuserinfoテーブルから指定のemailを持つUserを返す
-	public User selectByEmail(String email) {
-
-		//変数宣言
-		Connection con = null;
-		Statement  smt = null;
-		User user = new User();
-
-		//SQL文
-		String sql = "SELECT * FROM userinfo WHERE email = '" + email + "'";
-
-		try{
-			con = getConnection();
-			smt = con.createStatement();
-
-			ResultSet rs = smt.executeQuery(sql);
-
-			//取得した結果をUserオブジェクトに格納
-			if(rs.next()){
-				user.setUserid(rs.getInt("userid"));
-				user.setPassword(rs.getString("password"));
-				user.setUsername(rs.getString("username"));
-				user.setNickname(rs.getString("nickname"));
-				user.setBirthday(rs.getString("birthday"));
-				user.setPostal_code(rs.getString("postal_code"));
-				user.setAddress_level1(rs.getString("address_level1"));
-				user.setAddress_level2(rs.getString("address_level2"));
-				user.setAddress_line1(rs.getString("address_line1"));
-				user.setAddress_line2(rs.getString("address_line2"));
-				user.setEmail(rs.getString("email"));
-				user.setCredit_number(rs.getString("credit_number"));
-				user.setDeal_count(rs.getInt("deal_count"));
-				user.setAuthority(rs.getBoolean("authority"));
-				user.setCreated_at(rs.getString("created_at"));
-
-			}
-
-		}catch(Exception e){
-			throw new IllegalStateException(e);
-		}finally{
-			//リソースの開放
-			if(smt != null){
-				try{smt.close();}catch(SQLException ignore){}
-			}
-			if(con != null){
-				try{con.close();}catch(SQLException ignore){}
-			}
-		}
-		return user;
 	}
 
 

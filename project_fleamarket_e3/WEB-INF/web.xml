@@ -159,7 +159,7 @@
 		<!-- MyProductDetailServelt -->
 	<servlet>
 		<servlet-name>myProductDetailMapping</servlet-name>
-		<servlet-class>servlet.MyProductDetailServelt</servlet-class>
+		<servlet-class>servlet.MyProductDetailServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>myProductDetailMapping</servlet-name>
@@ -170,7 +170,7 @@
 		<!-- MyProductUpdateServelt -->
 	<servlet>
 		<servlet-name>myProductUpdateMapping</servlet-name>
-		<servlet-class>servlet.MyProductUpdateServelt</servlet-class>
+		<servlet-class>servlet.MyProductUpdateServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>myProductUpdateMapping</servlet-name>

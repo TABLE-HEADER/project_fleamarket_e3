@@ -70,6 +70,8 @@ public class RegisterServlet extends HttpServlet {
 			sendMail.setText(footerText);
 			sendMail.sendMail();
 
+			// 登録できたらregisterUserはセッションから削除
+			session.removeAttribute("registerUser");
 
 		}catch(IllegalStateException e) {
 			error = "DB接続エラーの為、会員登録ができませんでした。";

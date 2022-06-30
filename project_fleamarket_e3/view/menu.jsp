@@ -65,7 +65,7 @@ if(0 <= random && random <= 70){
 						<a href="<%=request.getContextPath()%>/productList" ><li>商品一覧</li></a>
 						<a href="<%=request.getContextPath()%>/userList"><li>ユーザー一覧</li></a>
 						<a href="<%=request.getContextPath()%>/salesList"><li>売上一覧</li></a>
-						<a href="<%=request.getContextPath()%>/logout" id="logout_link"><li style="color:red;">【ログアウト】</li></a>
+						<a id="logout_link"><li style="color:red;">【ログアウト】</li></a>
 
 				<% }else { %>
 				<div id="login_form">
@@ -76,7 +76,7 @@ if(0 <= random && random <= 70){
 						<a href="<%=request.getContextPath()%>/myProductList"><li>出品一覧</li></a>
 						<a href="<%=request.getContextPath()%>/view/myProductInsert.jsp"><li>出品する</li></a>
 						<a href="<%=request.getContextPath()%>/userDetail"><li>ユーザー情報の変更</li></a>
-						<a href="<%=request.getContextPath()%>/logout" id="logout_link"><li style="color:red;">【ログアウト】</li></a>
+						<a id="logout_link"><li style="color:red;">【ログアウト】</li></a>
 
 				<% } %>
 					</ul>

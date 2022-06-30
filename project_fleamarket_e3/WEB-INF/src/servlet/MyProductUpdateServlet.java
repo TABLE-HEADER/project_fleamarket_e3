@@ -52,6 +52,10 @@ public class MyProductUpdateServlet extends HttpServlet {
 			String remark = request.getParameter("remark");
 
 			// 全データの空白チェック(データが入力されているかどうか)
+			if (category.equals("")) {
+				error.add("カテゴリが未入力です。");
+			}
+
 			if (productname.equals("")) {
 				error.add("商品名が未入力です。");
 			}

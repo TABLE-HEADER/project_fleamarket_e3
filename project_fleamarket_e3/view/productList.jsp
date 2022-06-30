@@ -78,6 +78,7 @@ if(request.getParameter("category") != null){
 			<div>
 				<h2 style="margin:15px auto 10px;">商品一覧</h2>
 			</div>
+			<p>気になる商品名をクリック！</p>
 
 			<input id="detailCheckbox" class="detailCheckbox" type="checkbox">
 			<table align="center">
